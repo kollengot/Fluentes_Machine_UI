@@ -41,8 +41,11 @@ class QuoteDetail extends Component {
     }
 
     handleMeasureChange(id, propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var tmpObj = this.state.selectedItem;
-        tmpObj.Measures.find(o => o.id == id)[propertyName] = event.target.value;
+        tmpObj.Measures.find(o => o.id === id)[propertyName] = event.target.value;
         this.setState({ selectedItem: tmpObj });
     }
 
@@ -51,6 +54,17 @@ class QuoteDetail extends Component {
     }
     editQuote() {
         this.props.parentEditButtonCallBack();
+    }
+    deleteQuote() {
+        UserService.deleteQuote(this.props.dataFromParent.id).then(
+            response => {
+                //this.props.parentEditCallBack(response.data);
+                console.log(response);  
+            },
+            error => {
+                console.log("Error");
+            }
+        );
     }
     saveQuote() {
 
@@ -132,7 +146,7 @@ class QuoteDetail extends Component {
     handleRemoveClick(id, event) {
         
         var tmpObj = this.state.selectedItem;
-        tmpObj.Measures = this.state.selectedItem.Measures.filter(o => o.id != id);
+        tmpObj.Measures = this.state.selectedItem.Measures.filter(o => o.id !== id);
         this.setState({ selectedItem: tmpObj }); 
     }
     handleClose = () => {
@@ -254,10 +268,10 @@ class QuoteDetail extends Component {
                     <div className="col">
                         <label>Unit</label>
                     </div>
-                    <div className="col">
+                    <div className="col-2">
                         <label>Quantity</label>
                     </div>
-                    <div className="col">
+                    <div className="col-1">
                         <label></label>
                     </div>
                 </div>
@@ -276,17 +290,19 @@ class QuoteDetail extends Component {
 
                             <input type="text" className="form-control"
                                 defaultValue={item.unit}
+                                autoComplete={'' + Math.random()}
                                 onChange={this.handleMeasureChange.bind(this, item.id, 'unit')}
                             />
                         </div>
-                        <div className="col">
+                        <div className="col-2">
 
-                            <input type="text" className="form-control"
+                            <input type="number" className="form-control"
                                 defaultValue={item.qty}
+                                min="1" 
                                 onChange={this.handleMeasureChange.bind(this, item.id, 'qty')}
                             />
                         </div>
-                        <div className="col">
+                        <div className="col-1">
                             <button
                                 className="btn measure-delete-btn "
                                 onClick={this.handleRemoveClick.bind(this, item.id)}></button>
@@ -360,7 +376,7 @@ class QuoteDetail extends Component {
                                 return (
                                     <div className="">
                                         <button className="btn btn-link" onClick={() => this.showUploadImage(item.filePath)}>{item.fileName}</button>
-                                        <button class="btn remove-btn" onClick={() => this.removeUploadedImage(item)}></button>
+                                        <button className="btn remove-btn" onClick={() => this.removeUploadedImage(item)}></button>
                                     </div>
                                 )
                             })
@@ -454,18 +470,18 @@ class QuoteDetail extends Component {
                     </div>
                     {this.renderUploadsSection(this.props.dataFromParent.Uploads)}
 
-                    {this.props.dataFromParent.status == "QUOTE_RECEIVED" &&
-                    <div class="purchase-order d-inline-block form-group">
+                    {this.props.dataFromParent.status === "QUOTE_RECEIVED" &&
+                    <div className="purchase-order d-inline-block form-group">
                         <span className="underline blue mb-2">Order details</span>
-                        <div class="row ml-2">
-                            <div class="col-md-8">Operation Cost</div>
-                            <div class="col-md-2">{this.props.dataFromParent.operationCostTotal}</div>
-                            <div class="col-md-8">Inspection Amount</div>
-                            <div class="col-md-2">{this.props.dataFromParent.inspectionTotal}</div>
-                            <div class="col-md-8">Tax</div>
-                            <div class="col-md-2">5%</div>
-                            <div class="col-md-8">Sub Total</div>
-                            <div class="col-md-2">{this.props.dataFromParent.total}</div>
+                        <div className="row ml-2">
+                            <div className="col-md-8">Operation Cost</div>
+                            <div className="col-md-2">{this.props.dataFromParent.operationCostTotal}</div>
+                            <div className="col-md-8">Inspection Amount</div>
+                            <div className="col-md-2">{this.props.dataFromParent.inspectionTotal}</div>
+                            <div className="col-md-8">Tax</div>
+                            <div className="col-md-2">5%</div>
+                            <div className="col-md-8">Sub Total</div>
+                            <div className="col-md-2">{this.props.dataFromParent.total}</div>
                         </div>
                     </div>
                     
@@ -480,7 +496,7 @@ class QuoteDetail extends Component {
                             <span className="underline blue mb-2">Status</span>
                             <p> {this.props.dataFromParent.status}
 
-                                {this.props.dataFromParent.status == "QUOTE_RECEIVED" &&
+                                {this.props.dataFromParent.status === "QUOTE_RECEIVED" &&
                                     <label className="btn btn-green btn-sm pr-4 pl-4 ml-2">
                                         Submit P O <input type="file" hidden onChange={this.handleFileInput.bind(this)} />
                                     </label>
@@ -562,7 +578,8 @@ class QuoteDetail extends Component {
 
                             {this.props.isQuoteEditActive
                                 ? <button type="button" className="btn btn-green btn-sm pr-4 pl-4 ml-2" onClick={() => this.saveQuote()}>Save</button>
-                                : <button type="button" className="btn btn-green btn-sm pr-4 pl-4 ml-2" onClick={() => this.editQuote()}>Edit</button>
+                                : <div className="d-inline"><button type="button" className="btn btn-green btn-sm pr-4 pl-4 ml-2" onClick={() => this.editQuote()}>Edit</button>
+                                <button type="button" className="btn btn-delete btn-sm pr-4 pl-4 ml-2" onClick={() => this.deleteQuote()} >Delete</button></div>
                             }
 
                         </div>

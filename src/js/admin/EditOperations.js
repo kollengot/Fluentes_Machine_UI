@@ -8,10 +8,12 @@ class EditOperations extends Component {
             item: [],
             toolsList: [],
             selectedTool: {},
-            errors: {}
+            errors: {},
+            hasMoreItems: true,
+            pageNo: 0
         }
         if(this.props.selectedId) this.getOperationById();
-        this.getAllTools();
+       this.getAllTools();
         //this.getAllWorkers();
     }
     getOperationById() {
@@ -29,11 +31,20 @@ class EditOperations extends Component {
          
     }
     getAllTools() {
-        AdminService.getAllInventory().then(
+        AdminService.getAllInventory(this.state.pageNo).then(
             response => {
-                this.setState({
-                    toolsList: response.data.rows
-                });
+                if(response){
+                    var tmpListitems = [...this.state.toolsList, ...response.data.rows];
+                    this.setState({
+                        toolsList: tmpListitems,
+                        pageNo: this.state.pageNo+1
+                    });
+                    if(this.state.pageNo >= response.data.currentPage) {
+                        this.setState({
+                            hasMoreItems: false
+                        });
+                    }
+                }
             },
             error => {
                 console.log("Error");
@@ -55,6 +66,9 @@ class EditOperations extends Component {
     } */
 
     handleChange(propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var item = this.state.item;
         item[propertyName] = event.target.value;
         this.setState({ item: item });
@@ -203,7 +217,7 @@ class EditOperations extends Component {
                         </select>
                     </div>
                     <div className="col-6">
-                        <input type="number" className="form-control col-6 d-inline" onChange={this.handleChange.bind(this, 'toolRequired')} />
+                        <input type="number" min = "1" className="form-control col-6 d-inline" onChange={this.handleChange.bind(this, 'toolRequired')} />
                         <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4 d-inline" onClick={this.addTools.bind(this)}>Add</button>
                     </div>
                 </div>

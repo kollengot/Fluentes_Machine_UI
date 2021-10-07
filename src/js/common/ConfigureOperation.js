@@ -163,6 +163,9 @@ class ConfigureOperation extends Component {
     };
 
     reqQntyChange = changeEvent => {
+        if(changeEvent.target.type === 'number') {
+            changeEvent.target.value = Math.abs(changeEvent.target.value);
+        }
         const { name } = changeEvent.target;
         let obj =[]; obj = this.state.toolList;
         let sObj = []; sObj = this.state.selectedToolList;
@@ -178,6 +181,10 @@ class ConfigureOperation extends Component {
         });
     };
     reqHourChange = changeEvent => {
+        if(changeEvent.target.type === 'number') {
+            changeEvent.target.value = Math.abs(changeEvent.target.value);
+        }
+        
         const { name } = changeEvent.target;
         
         let obj =[]; obj = this.state.workerList;

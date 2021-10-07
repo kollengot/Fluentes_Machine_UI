@@ -58,7 +58,21 @@ class UserService {
         };
         return axios(config)
             .then(function (response) {
-                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    deleteQuote(quoteId) {
+        var config = {
+            method: 'DELETE',
+            url: API_URL + 'quotes/' + quoteId
+        };
+
+        return axios(config)
+            .then(function (response) {
                 return response;
             })
             .catch(function (error) {

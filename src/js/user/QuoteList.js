@@ -27,14 +27,22 @@ class QuoteList extends Component {
     }
 
     getAllQuotes() {
+        debugger;
         UserService.getAllQuotes(this.state.pageNo).then(
             response => {
-                var tmpListitems = [...this.state.listitems, ...response.data.rows];
+                var tmpListitems = [];
+                if(response.data.currentPage !== 0 ){
+                    tmpListitems = [...this.state.listitems, ...response.data.rows];
+                } else {
+                    tmpListitems = response.data.rows;
+                }
+                
                 this.setState({
                     listitems: tmpListitems,
-                    pageNo: this.state.pageNo+1
+                    pageNo: response.data.currentPage + 1
                 });
-                if(this.state.pageNo >= response.data.currentPage) {
+                
+                if(response.data.currentPage >= (response.data.totalPages-1)) {
                     this.setState({
                         hasMoreItems: false
                     });
@@ -86,6 +94,7 @@ class QuoteList extends Component {
                     {this.state.listitems && this.state.listitems.filter(item =>
                         item.title.toLowerCase().includes(this.state.searchValue)).map(listitem => (
 
+                            // eslint-disable-next-line jsx-a11y/anchor-is-valid
                             <a className={
                                 (listitem.id === this.state.activeId ? " active list-group-item list-group-item-action" : "list-group-item list-group-item-action")
                               }

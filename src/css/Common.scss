@@ -514,10 +514,10 @@ p.ellipses_two {
 
 .measure-delete-btn {
   background-image: url("../images/delete.png");
-  background-size: 100%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  height: 30px;
+  height: 23px;
 }
 .remove-btn {
   background-image: url("../images/remove.png");
@@ -540,6 +540,10 @@ p.ellipses_two {
 }
 .btn-green {
   background: #4cca2e;
+  color: #fcfcfc;
+}
+.btn-delete {
+  background: #72372d;
   color: #fcfcfc;
 }
 input[type="number"] {

@@ -20,7 +20,12 @@ class ManageWorker extends Component {
         AdminService.getAllWorkers(this.state.pageNo).then(
             response => {
                 if(response) {
-                    var tmpListitems = [...this.state.listitems, ...response.data.rows];
+                    var tmpListitems = [];
+                    if(response.data.currentPage !== 0 ){
+                        tmpListitems = [...this.state.listitems, ...response.data.rows];
+                    } else {
+                        tmpListitems = response.data.rows;
+                    }
                     this.setState({
                         listitems: tmpListitems,
                         pageNo: this.state.pageNo+1
@@ -115,13 +120,17 @@ class ManageWorker extends Component {
         });
     }
     parentCallback = (response) => {
+        this.setState({
+            editWorkerPage: false,
+            selectedItem: [],
+            hasMoreItems: true,
+            pageNo: 0
+        });
         if(response && response.data.message){
             this.showPopup(response.data.message);
             this.getAllWorkerList();
         } 
-        this.setState({
-            editWorkerPage: false
-        });
+        
     }
     renderWorkerList() {
         return (<div className="col admin-list-page">

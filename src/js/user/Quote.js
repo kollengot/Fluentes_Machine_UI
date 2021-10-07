@@ -148,11 +148,13 @@ class UserQuote extends Component {
         this.setState({ item: item });
     }
     handleMeasureChange(id, propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var tmpObj = this.state.item;
-        tmpObj.measures.find(o => o.id == id)[propertyName] = event.target.value;
+        tmpObj.measures.find(o => o.id === id)[propertyName] = event.target.value;
         this.setState({ item: tmpObj });
     }
-
     addMeasuresClick() {
         let tmpObj = this.state.item;
         let tmpId = this.state.measuresObjId + 1;
@@ -169,7 +171,7 @@ class UserQuote extends Component {
     }
     handleRemoveClick(id, event) {
         var tmpObj = this.state.item;
-        tmpObj.measures = this.state.item.measures.filter(o => o.id != id);
+        tmpObj.measures = this.state.item.measures.filter(o => o.id !== id);
         this.setState({ item: tmpObj });
     }
 
@@ -241,10 +243,10 @@ class UserQuote extends Component {
                                 <div className="col">
                                     <label>Unit</label>
                                 </div>
-                                <div className="col">
+                                <div className="col-2">
                                     <label>Quantity</label>
                                 </div>
-                                <div className="col">
+                                <div className="col-1">
                                     <label></label>
                                 </div>
                             </div>
@@ -266,14 +268,14 @@ class UserQuote extends Component {
                                             onChange={this.handleMeasureChange.bind(this, item.id, 'unit')}
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-2">
 
                                         <input type="number" className="form-control"
                                             defaultValue={item.qty} min="1" 
                                             onChange={this.handleMeasureChange.bind(this, item.id, 'qty')}
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-1">
                                         <button
                                             className="btn measure-delete-btn "
                                             onClick={this.handleRemoveClick.bind(this, item.id)}></button>

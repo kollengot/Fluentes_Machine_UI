@@ -9,6 +9,9 @@ class EditWorker extends Component {
         errors: {}
     }
     handleChange(propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var item = this.state.item;
         item[propertyName] = event.target.value;
         this.setState({ item: item });
