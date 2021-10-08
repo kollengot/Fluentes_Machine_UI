@@ -272,6 +272,9 @@ p.ellipses_two {
   .admin-list-page {
     .quote-req-list {
       color: #000;
+      .col-sm {
+        min-width: 50px;
+      }
     }
   }
 }
@@ -322,6 +325,9 @@ p.ellipses_two {
       border-radius: 5px;
       color: #666;
       overflow: auto;
+      .col-sm {
+        min-width: 50px;
+      }
       input[type="checkbox"] {
         margin: 0 5px 0 0;
       }
@@ -376,12 +382,12 @@ p.ellipses_two {
     margin: 0 15px 0 0;
   }
   .description-truncate {
-    max-width: 190px;
+    max-width: 95%;
   }
   .projectname-truncate {
     font-weight: 400;
     font-size: 14px;
-    max-width: 65%;
+    max-width: 95%;
     input[type="radio"] {
       margin: 0 5px 0 0;
     }
@@ -635,3 +641,6 @@ input[type="number"] {
     border-radius: 0;
   }
 }
+
+
+

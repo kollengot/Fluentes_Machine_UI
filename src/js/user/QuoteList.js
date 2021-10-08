@@ -27,7 +27,6 @@ class QuoteList extends Component {
     }
 
     getAllQuotes() {
-        debugger;
         UserService.getAllQuotes(this.state.pageNo).then(
             response => {
                 var tmpListitems = [];

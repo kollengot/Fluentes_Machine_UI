@@ -158,10 +158,10 @@ class ManageProjects extends Component {
                     </div>
                     <div className="quote-req-list">
                         <div className="row mt-1 quote-req-header">
-                            <div className="col-sm">
+                            <div className="col-2">
                                 <label>Project Name</label>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-3">
                                 <label>Description</label>
                             </div>
                             <div className="col-sm">
@@ -189,7 +189,7 @@ class ManageProjects extends Component {
                                 item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
 
                                     <div className="row mt-1" key={listitem.id}>
-                                        <div className="col-sm" >
+                                        <div className="col-2" >
                                             <label className="btn btn-default blue projectname-truncate text-truncate">
                                                 <input type="radio" className="toggle"
                                                     name="projectItem" value={listitem.id}
@@ -198,7 +198,7 @@ class ManageProjects extends Component {
                                             </label>
                                             
                                         </div>
-                                        <div className="col-sm" >
+                                        <div className="col-3" >
                                             <label className="description-truncate text-truncate">{listitem.desc}</label>
                                         </div>
                                         <div className="col-sm" >
@@ -215,7 +215,7 @@ class ManageProjects extends Component {
                                             <label>{(new Date(listitem.end_date)).toLocaleDateString() }</label>
                                         </div>
                                         <div className="col-sm" >
-                                            <label className = {"badge " + statusColorClass(listitem.status)} >{listitem.status}</label>
+                                            <label className = {"badge description-truncate text-truncate " + statusColorClass(listitem.status)} >{listitem.status}</label>
                                         </div>
                                     </div>
                                 ))}

@@ -45,7 +45,6 @@ class ConfigureOperation extends Component {
     }
 
     getAllTools() {
-        debugger;
         AdminService.getAllInventory(this.state.toolPageNo).then(
             response => {
                 var tmpListitems = [...this.state.toolList, ...response.data.rows];

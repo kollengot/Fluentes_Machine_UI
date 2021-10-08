@@ -17,7 +17,9 @@ class EditProject extends Component {
         selectedWorker: {},
         popupConfig: {},
         isPopupOpen: false,
-        errors: {}
+        errors: {},
+        hasMoreItems: true,
+        pageNo: 0
     }
     getSingleProject = () => {
         AdminService.getSingleProject(this.props.selectedId).then(
@@ -99,17 +101,34 @@ class EditProject extends Component {
         this.props.parentCallback();
     }
     getAllWorkers() {
-        AdminService.getAllWorkers().then(
+        AdminService.getAllWorkers(this.state.pageNo).then(
             response => {
-                this.setState({
-                    workerList: response.data.rows
-                });
+                if(response) {
+                    var tmpListitems = [];
+                    if(response.data.currentPage !== 0 ){
+                        tmpListitems = [...this.state.workerList, ...response.data.rows];
+                    } else {
+                        tmpListitems = response.data.rows;
+                    }
+                    this.setState({
+                        workerList: tmpListitems,
+                        pageNo: this.state.pageNo+1
+                    });
+
+                    if(this.state.pageNo >= response.data.currentPage) {
+                        this.setState({
+                            hasMoreItems: false
+                        });
+                    }
+                } 
             },
             error => {
                 console.log("Error");
             }
         );
     }
+
+
     statusChange(event) {
         var data = {
             "status": "CLOSED"
