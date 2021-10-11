@@ -76,7 +76,7 @@ class UserService {
                 return response;
             })
             .catch(function (error) {
-                console.log(error);
+                return({message: error.message});
             });
     }
 

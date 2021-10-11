@@ -150,13 +150,13 @@ class ManageOperations extends Component {
                     </div>
                     <div className="quote-req-list">
                         <div className="row mt-1 quote-req-header">
-                            <div className="col-sm">
+                            <div className="col-2">
                                 <label>Operation Name</label>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-3">
                                 <label>Description</label>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-3">
                                 <label>Tools & Materials Required </label>
                             </div>
                             <div className="col-sm">
@@ -173,7 +173,7 @@ class ManageOperations extends Component {
                                 item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
 
                                     <div className="row mt-1" key={listitem.id}>
-                                        <div className="col-sm" >
+                                        <div className="col-2" >
                                             <label className="btn btn-default blue projectname-truncate text-truncate">
                                                 <input type="radio" className="toggle"
                                                     name="operationItem" value={listitem.id}
@@ -182,10 +182,10 @@ class ManageOperations extends Component {
                                             </label>
                                             
                                         </div>
-                                        <div className="col-sm" >
+                                        <div className="col-3" >
                                             <label className="description-truncate text-truncate">{listitem.desc}</label>
                                         </div>
-                                        <div className="col-sm" >
+                                        <div className="col-3" >
                                         
                                             
                                             <label className="description-truncate text-truncate">

@@ -56,6 +56,11 @@ class Profile extends Component {
             };
             userService.updateUserProfile(data).then(
                 response => {
+                    //localStorage.setItem("user", JSON.stringify(response.data.data));
+                    var tmpUser = JSON.parse(localStorage.getItem('user'));
+                    tmpUser.userName = response.data.data.name;
+                    localStorage.setItem("user", JSON.stringify(tmpUser));
+                    
                     this.setState({
                         respMsg: response.data.message
                       });

@@ -62,6 +62,12 @@ class Dashboard extends Component {
       isQuoteEditActive: true
     });
   }
+  quoteDeletecallBack = () => {
+    this.setState({
+      reloadKey: this.state.reloadKey+1
+    });
+  }
+
   quoteEditCallBack = (response) => {
 
 
@@ -118,7 +124,7 @@ class Dashboard extends Component {
           </div>
           <div className="col">
             {!this.state.isQuoteDetailActive ? <Quote parentCreateCallBack={this.quoteCreateCallBack} /> : null}
-            {this.state.isQuoteDetailActive ? <QuoteDetail parentEditCallBack={this.quoteEditCallBack} parentEditButtonCallBack ={this.quoteEdit} isQuoteEditActive={this.state.isQuoteEditActive} dataFromParent={this.state.quoteItem} parentCallback={this.selectedOuoteItem} /> : null}
+            {this.state.isQuoteDetailActive ? <QuoteDetail parentDeletecallBack = {this.quoteDeletecallBack} parentEditCallBack={this.quoteEditCallBack} parentEditButtonCallBack ={this.quoteEdit} isQuoteEditActive={this.state.isQuoteEditActive} dataFromParent={this.state.quoteItem} parentCallback={this.selectedOuoteItem} /> : null}
           </div>
         </div>
         <Footer></Footer>

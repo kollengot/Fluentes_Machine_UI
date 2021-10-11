@@ -17,7 +17,8 @@ class UserQuote extends Component {
             showAlert: false,
             alertConfig: {
                 "variant": "danger"
-            }
+            },
+            reloadKey: 1
         }
         this.state.item['measures'] = [
             {
@@ -30,15 +31,21 @@ class UserQuote extends Component {
     }
 
     resetQuote() {
-        this.setState({
-            item: {},
-            measuresObjId: 1
-        });
-        var obj = this.state.item;
-        obj['measures'] = [];
-        this.setState({ item: obj });
+        var tmpObj = this.state.item;
+        tmpObj.title = "";
+        tmpObj.desc = "";
+        tmpObj.startDate = "";
+        tmpObj.endDate = "";
+        tmpObj.measures = [
+            {
+                "id": this.state.measuresObjId,
+                "name": "",
+                "unit": "",
+                "qty": ""
+            }
+        ];
+        this.setState({ item: tmpObj,measuresObjId: 1,reloadKey:this.state.reloadKey+1 }); 
     }
-
 
 
     formValidation(event) {
@@ -189,7 +196,7 @@ class UserQuote extends Component {
                         <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.formValidation()}>Send</button>
                     </div>
                 </div>
-                <div className="blue-box-div" id="create-quote-form">
+                <div className="blue-box-div" id="create-quote-form" key={this.state.reloadKey}>
 
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
@@ -204,7 +211,7 @@ class UserQuote extends Component {
                         <label htmlFor="description">Description</label>
                         <textarea className="form-control" id="description" rows="3"
 
-                            defaultValue={this.state.item.desc && this.state.item.desc}
+                            defaultValue={this.state.item.desc}
                             onChange={this.handleFormChange.bind(this, 'desc')}
 
                         ></textarea>
@@ -235,7 +242,7 @@ class UserQuote extends Component {
                         <label>Measurements</label>
                         <button className="btn add-btn" onClick={() => this.addMeasuresClick()}></button>
 
-                        {this.state.item.measures.length > 0 &&
+                        {this.state.item.measures && this.state.item.measures.length > 0 &&
                             <div className="row">
                                 <div className="col">
                                     <label>Name</label>

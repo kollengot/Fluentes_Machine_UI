@@ -30,7 +30,7 @@ class QuoteList extends Component {
         UserService.getAllQuotes(this.state.pageNo).then(
             response => {
                 var tmpListitems = [];
-                if(response.data.currentPage !== 0 ){
+                if(response && response.data.currentPage !== 0 ){
                     tmpListitems = [...this.state.listitems, ...response.data.rows];
                 } else {
                     tmpListitems = response.data.rows;

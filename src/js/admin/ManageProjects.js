@@ -164,10 +164,10 @@ class ManageProjects extends Component {
                             <div className="col-3">
                                 <label>Description</label>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-1">
                                 <label>Days Commited</label>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-1">
                                 <label>Days Left</label>
                             </div>
 
@@ -201,10 +201,10 @@ class ManageProjects extends Component {
                                         <div className="col-3" >
                                             <label className="description-truncate text-truncate">{listitem.desc}</label>
                                         </div>
-                                        <div className="col-sm" >
+                                        <div className="col-1" >
                                             <label>{this.getNumberOfDays(listitem.start_date,listitem.end_date)}</label>
                                         </div>
-                                        <div className="col-sm" >
+                                        <div className="col-1" >
                                             {(new Date(listitem.start_date) < new Date()) ? (<label>{this.getNumberOfDays(new Date(),listitem.end_date)}</label>) : <label>{this.getNumberOfDays(listitem.start_date,listitem.end_date)}</label>}
                                             
                                         </div>

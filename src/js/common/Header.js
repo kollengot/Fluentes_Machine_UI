@@ -12,16 +12,11 @@ class Header extends Component {
         isPopupOpen: false,
         user: JSON.parse(localStorage.getItem('user'))   
     }
-    constructor(props) {
-        super(props);
-    }
     handleClose = (list) => {
         this.setState({
-            isPopupOpen: false
+            isPopupOpen: false,
+            user: JSON.parse(localStorage.getItem('user'))
         });
-    }
-    clickToggle = () => {
-        alert("dsad");
     }
     logOut() {
         localStorage.removeItem("user");

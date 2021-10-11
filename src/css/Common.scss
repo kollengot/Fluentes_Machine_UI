@@ -315,6 +315,7 @@ p.ellipses_two {
 */
 
 .admin-list-page {
+  max-width: 90%;
   .quote-req-list {
     color: #fff;
     font-size: 14px;
@@ -382,7 +383,7 @@ p.ellipses_two {
     margin: 0 15px 0 0;
   }
   .description-truncate {
-    max-width: 95%;
+    max-width: 90%;
   }
   .projectname-truncate {
     font-weight: 400;

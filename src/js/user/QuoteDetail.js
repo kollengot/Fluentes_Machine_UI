@@ -58,8 +58,21 @@ class QuoteDetail extends Component {
     deleteQuote() {
         UserService.deleteQuote(this.props.dataFromParent.id).then(
             response => {
-                //this.props.parentEditCallBack(response.data);
-                console.log(response);  
+                var message = "Something went wrong!";
+                if(response.message) {
+                    message = response.message;
+                } else {
+                    message = response.data.message;
+                    this.props.parentDeletecallBack();
+                }
+                this.setState({
+                    isPopupOpen: true,
+                    popupConfig: {
+                        header: "Message",
+                        body: message,
+                        type: "message"
+                    }
+                });
             },
             error => {
                 console.log("Error");

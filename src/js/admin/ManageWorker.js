@@ -157,16 +157,16 @@ class ManageWorker extends Component {
                     <div className="col-sm">
                         <label>Phone</label>
                     </div>
-                    <div className="col-sm">
+                    <div className="col-3">
                         <label>Address</label>
                     </div>
                     <div className="col-sm">
                         <label>Email</label>
                     </div>
-                    <div className="col-sm">
+                    <div className="col-1">
                         <label>Cost per Hour</label>
                     </div>
-                    <div className="col-sm">
+                    <div className="col-1">
                         <label>Availability per Week</label>
                     </div>
                     <div className="col-sm">
@@ -203,19 +203,19 @@ class ManageWorker extends Component {
                                     <label className="description-truncate text-truncate">{listitem.phone}</label>
                                 </div>
 
-                                <div className="col-sm" >
-                                    <label className="description-truncate text-truncate" >{listitem.address}</label>
+                                <div className="col-3" >
+                                    <label className="" >{listitem.address}</label>
                                 </div>
 
                                 <div className="col-sm" >
                                     <label>{listitem.email}</label>
                                 </div>
 
-                                <div className="col-sm" >
+                                <div className="col-1" >
                                     <label>{listitem.cost_per_hr}</label>
                                 </div>
 
-                                <div className="operation-div col-sm" >
+                                <div className="operation-div col-1" >
 
                                     <label>{listitem.total_avail_per_week}</label>
                                 </div>
