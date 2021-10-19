@@ -97,6 +97,23 @@ class AdminService {
 
         return axios(config)
             .then(function (response) {
+                console.log(response);
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+                console.log(error);
+            });
+    }
+    assignQuoteInspection(quoteId,data) {
+        var config = {
+            method: 'post',
+            url: API_URL + 'quotes/assignQuoteInspection/'+quoteId,
+            data: data
+        };
+
+        return axios(config)
+            .then(function (response) {
                 return response;
             })
             .catch(function (error) {

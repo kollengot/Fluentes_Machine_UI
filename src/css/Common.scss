@@ -386,6 +386,8 @@ p.ellipses_two {
     max-width: 90%;
   }
   .projectname-truncate {
+    top: -5px;
+    position: relative;
     font-weight: 400;
     font-size: 14px;
     max-width: 95%;

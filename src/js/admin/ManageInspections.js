@@ -330,7 +330,7 @@ class ManageInspection extends Component {
             <React.Fragment>
                 {!this.state.editInspectionPage && this.renderInspectionList()}
                 {this.state.editInspectionPage && this.renderEditInspection()}
-                {this.renderTax()}
+                {/*this.renderTax()*/}
                 <Popup popupConfig = {this.state.popupConfig} openFlag = {this.state.isPopupOpen} parentCloseCallback={this.handleClose.bind(this)} parentConfirmCallback = {this.handleModalYes.bind(this)}></Popup>
             </React.Fragment>
         );

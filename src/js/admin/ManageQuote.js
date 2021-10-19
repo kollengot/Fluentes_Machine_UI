@@ -80,7 +80,7 @@ class ManageQuote extends Component {
         this.setState({
             isPopupOpen: false
         });
-        AdminService.deleteQuote(this.state.selectedItem.id).then(
+        /*AdminService.deleteQuote(this.state.selectedItem.id).then(
             response => {
                 var tempList = this.state.listitems.filter(item => item.id !== this.state.selectedItem.id);
                 this.setState({
@@ -91,7 +91,7 @@ class ManageQuote extends Component {
             error => {
               console.log("Error");
             }
-          );
+          );*/
     };
 
     showPopup(message) {
@@ -104,7 +104,7 @@ class ManageQuote extends Component {
             }
         });
     }
-    deleteQuote() {
+    /*deleteQuote() {
         if (this.state.selectedItem && this.state.selectedItem.length === 0) {
             this.showPopup(validationMessages.NO_ITEM);
         } else {
@@ -117,7 +117,7 @@ class ManageQuote extends Component {
                 }
             });
         }
-    }
+    }*/
 
     editQuote() {
         if (this.state.selectedItem && this.state.selectedItem.length === 0) {
@@ -150,7 +150,7 @@ class ManageQuote extends Component {
                         <span className="fa fa-search form-control-feedback"></span>
                         <input type="text" className="form-control search-box" placeholder="Search quote requests..." onChange={this.handleSearchChange.bind(this)} />
                     </div>
-                    <button className="btn delete-btn" onClick={() => this.deleteQuote()}></button>
+                    
                     <button className="btn edit-btn" onClick={() => this.editQuote()}></button>
 
                 </div>

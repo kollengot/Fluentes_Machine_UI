@@ -204,7 +204,7 @@ class ManageWorker extends Component {
                                 </div>
 
                                 <div className="col-3" >
-                                    <label className="" >{listitem.address}</label>
+                                    <label className="description-truncate text-truncate" >{listitem.address}</label>
                                 </div>
 
                                 <div className="col-sm" >

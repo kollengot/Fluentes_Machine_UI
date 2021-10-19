@@ -72,6 +72,23 @@ class AuthService {
                 console.log(error);
             });
     }
+
+    verifyReset(data) {
+        var config = {
+            method: 'post',
+            url: API_URL + "verifyReset",
+            data: data
+        };
+
+        return axios(config)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     createCustomer(data) {
         var config = {
             method: 'put',

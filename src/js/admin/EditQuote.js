@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { Accordion, Card } from "react-bootstrap";
 
 import { statusColorClass, headerBtn } from '../common/Utils.js';
 import Popup from "../components/Popup";
 import TableHeader from "../components/TableHeader";
 import TableRow from "../components/TableRow";
-
 import AdminService from "../services/admin.service";
-
 import { validationMessages } from '../common/Constants';
-
-import operationJson from '../../data/quoteItem.json';
 
 class QuoteReqUpdate extends Component {
   state = {
@@ -143,9 +139,10 @@ class QuoteReqUpdate extends Component {
     };
     AdminService.tagQuote(data).then(
       response => {
-        if(response)
+        console.log(response);
+        if (response)
           this.showPopupMessage(response.data.message);
-        else 
+        else
           this.showPopupMessage("Something went wrong!");
       },
       error => {
@@ -182,14 +179,14 @@ class QuoteReqUpdate extends Component {
   }
   changeQuoteToProject() {
     var data = {
-      "name":this.state.selectedItem.title,
-      "desc":this.state.selectedItem.desc,
-      "startDate":this.state.selectedItem.endDate,
-      "endDate":this.state.selectedItem.startDate
-  };
+      "name": this.state.selectedItem.title,
+      "desc": this.state.selectedItem.desc,
+      "startDate": this.state.selectedItem.endDate,
+      "endDate": this.state.selectedItem.startDate
+    };
     AdminService.convertToProject(this.state.selectedItem.id, data).then(
       response => {
-        if(response.data) 
+        if (response.data)
           this.showPopupMessage(response.data.message);
       },
       error => {
@@ -198,16 +195,16 @@ class QuoteReqUpdate extends Component {
     );
   }
 
-  changeQuoteStatus(status,reasonTxt) {
+  changeQuoteStatus(status, reasonTxt) {
     var data = {
       "status": status
     };
-    if(status === "QUOTE_REJECTED") {
+    if (status === "QUOTE_REJECTED") {
       data.reason = reasonTxt
     }
     AdminService.changeStatus(this.state.selectedItem.id, data).then(
       response => {
-        if(response.data) 
+        if (response.data)
           this.showPopupMessage(response.data.message);
       },
       error => {
@@ -230,16 +227,16 @@ class QuoteReqUpdate extends Component {
   handleBreadCrumb() {
     this.props.parentCallback();
   }
-  deleteOperation(opId,opName,event) {
+  deleteOperation(opId, opName, event) {
     this.setState({
       deleteOpId: opId,
       isPopupOpen: true,
-      popupConfig : {
-          header: "Confirm to Delete",
-          body:validationMessages.DELETE_CONFIRM+opName,
-          type: "confirmation"
+      popupConfig: {
+        header: "Confirm to Delete",
+        body: validationMessages.DELETE_CONFIRM + opName,
+        type: "confirmation"
       }
-  });
+    });
 
 
   }
@@ -315,33 +312,24 @@ class QuoteReqUpdate extends Component {
   };
 
   handleModalYes = (data) => {
-    
+
     this.setState({
       isPopupOpen: false
     });
 
 
-  if(this.state.popupConfig.type === "rejectQuote")
-  {
-    this.changeQuoteStatus("QUOTE_ADMIN_REJECTED", data);
-  }
-   
-else {
-  var tempList = this.state.selectedItem.QuoteOperation.filter(item => item.Operations.id !== this.state.deleteOpId);
-  var tmpSelectedItem = this.state.selectedItem;
-  tmpSelectedItem.QuoteOperation = tempList;
-  this.setState({
-    selectedItem: tmpSelectedItem
-  });
-}
+    if (this.state.popupConfig.type === "rejectQuote") {
+      this.changeQuoteStatus("QUOTE_ADMIN_REJECTED", data);
+    }
 
-
-
-
-
-    
-
- 
+    else {
+      var tempList = this.state.selectedItem.QuoteOperation.filter(item => item.Operations.id !== this.state.deleteOpId);
+      var tmpSelectedItem = this.state.selectedItem;
+      tmpSelectedItem.QuoteOperation = tempList;
+      this.setState({
+        selectedItem: tmpSelectedItem
+      });
+    }
 
     /*
     AdminService.deleteQuote(this.state.selectedItem.id).then(
@@ -365,6 +353,19 @@ else {
     this.setState({
       selectedInspection: event.target.value
     });
+    var data = {
+      "inspectionId": event.target.value
+    }
+    AdminService.assignQuoteInspection(this.state.selectedItem.id, data).then(
+      response => {
+        this.showPopupMessage(response.data.message);
+      },
+      error => {
+        console.log("Error");
+      }
+    );
+
+
   };
 
   handleOperationChange(event) {
@@ -402,8 +403,8 @@ else {
               type="tool"
               listItem={tool.Inventories}
               reqQty={tool.req_quantity}
-              deleteBtn = {true}
-              onDeleteRowClick = {this.onDeleteRowClick}
+              deleteBtn={true}
+              onDeleteRowClick={this.onDeleteRowClick}
             />);
           })
           }
@@ -426,8 +427,8 @@ else {
               type="worker"
               listItem={item.Workers}
               reqQty={item.total_hrs_req}
-              deleteBtn = {true}
-              onDeleteRowClick = {this.onDeleteRowClick}
+              deleteBtn={true}
+              onDeleteRowClick={this.onDeleteRowClick}
             />);
           })
           }
@@ -438,11 +439,11 @@ else {
   }
   getCost() {
     if (this.state.selectedItem.QuoteOperation) {
-      var totalCost = (this.state.selectedItem.QuoteOperation.reduce((a, v) => a = a + v.operation_cost, 0));
-      if(this.state.taxCheckboxChecked) {
-        totalCost = totalCost + totalCost* (5/100);
+      var totalCost = (this.state.selectedItem.QuoteOperation.reduce((a, v) => a = parseInt(a) + parseInt(v.operation_cost), 0));
+      if (this.state.taxCheckboxChecked) {
+        totalCost = totalCost + totalCost * (5 / 100);
       }
-      return totalCost;
+      return (Number((totalCost).toFixed(2)));
     } else {
       return (0);
     }
@@ -491,39 +492,39 @@ else {
   }
   removeUploadedImage(file) {
 
-/*
-    const config = {
-        bucketName: 'fuentes-fileupload',
-        dirName: 'quote-attachments',
-        region: 'us-west-1',
-        accessKeyId: 'AKIA5ARA5MYMNVC47U6F',
-        secretAccessKey: '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'
-    }
-   
-   
-    const ReactS3Client = new S3(config);
+    /*
+        const config = {
+            bucketName: 'fuentes-fileupload',
+            dirName: 'quote-attachments',
+            region: 'us-west-1',
+            accessKeyId: 'AKIA5ARA5MYMNVC47U6F',
+            secretAccessKey: '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'
+        }
+       
+       
+        const ReactS3Client = new S3(config);
+    
+        const filename = file.fileName;
+    
+        ReactS3Client
+            .deleteFile(filename)
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
+    
+    
+    */
 
-    const filename = file.fileName;
-
-    ReactS3Client
-        .deleteFile(filename)
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
-
-
-*/
-
-}
+  }
   showUploadImage(filePath) {
     this.setState({
-        isPopupOpen: true,
-        popupConfig: {
-            header: "Uploaded Data",
-            body: filePath,
-            type: "image"
-        }
+      isPopupOpen: true,
+      popupConfig: {
+        header: "Uploaded Data",
+        body: filePath,
+        type: "image"
+      }
     });
-}
+  }
 
   render() {
 
@@ -556,16 +557,16 @@ else {
 
             </div>
 
-          
 
-            {headerBtn(this.state.selectedItem.status) > 4 ? ( <div className="col-8 text-right">
-                  <button type="button" className="btn btn-blue btn-sm pr-4 pl-4" onClick={() => this.rejectQuote()} >Reject</button>
-                  <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.changeQuoteToProject()}>Accept Purchase Order</button>
-                </div>) : (<div className="col-8 text-right">
-                  <button type="button" className="btn btn-blue btn-sm pr-4 pl-4" onClick={() => this.resetReq()} >Reset</button>
-                  <button type="button" className="btn btn-info btn-sm ml-2 pr-4 pl-4" onClick={() => this.saveQuoteUpdate()}>Save</button>
-                  <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.submitQuoteUpdate()}>Submit</button>
-                </div>)}
+
+            {headerBtn(this.state.selectedItem.status) > 4 ? (<div className="col-8 text-right">
+              <button type="button" className="btn btn-blue btn-sm pr-4 pl-4" onClick={() => this.rejectQuote()} >Reject</button>
+              <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.changeQuoteToProject()}>Accept Purchase Order</button>
+            </div>) : (<div className="col-8 text-right">
+              <button type="button" className="btn btn-blue btn-sm pr-4 pl-4" onClick={() => this.resetReq()} >Reset</button>
+              <button type="button" className="btn btn-info btn-sm ml-2 pr-4 pl-4" onClick={() => this.saveQuoteUpdate()}>Save</button>
+              <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.submitQuoteUpdate()}>Submit</button>
+            </div>)}
 
 
           </div>
@@ -596,14 +597,14 @@ else {
                   <span className="underline half blue">Attachments</span>
 
                   {uploads && uploads.map((item, index) => {
-                                return (
-                                    <div className="">
-                                        <button className="btn btn-link p-0" onClick={() => this.showUploadImage(item.filePath)}>{item.fileName}</button>
-                                       
-                                    </div>
-                                )
-                            })
-                            }
+                    return (
+                      <div className="">
+                        <button className="btn btn-link p-0" onClick={() => this.showUploadImage(item.filePath)}>{item.fileName}</button>
+
+                      </div>
+                    )
+                  })
+                  }
 
                 </div>
                 {this.state.selectedItem.Measures &&
@@ -613,12 +614,12 @@ else {
 
 
               {this.state.selectedItem.status === "PROJECT_IN_PROGRESS" || this.state.selectedItem.status === "QUOTE_PO_SUBMIT" ?
-                
-                 <div className="col">
-                      <span className="underline blue mb-2">Purchase Order</span>
-                      <img src={this.state.selectedItem.submittedPO} className='po-img' alt='...'></img>
 
-                    </div>
+                <div className="col">
+                  <span className="underline blue mb-2">Purchase Order</span>
+                  <img src={this.state.selectedItem.submittedPO} className='po-img' alt='...'></img>
+
+                </div>
 
 
                 :
@@ -645,8 +646,8 @@ else {
                           <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
                       </select>
-                      
-                      Apply Tax <input type="checkbox" onChange={this.handleTaxChange.bind(this)}></input> 
+
+                      Apply Tax <input type="checkbox" onChange={this.handleTaxChange.bind(this)}></input>
                       <span className="blue ml-4">Total Cost</span>
                       <span className="badge btn-blue p-2 ml-2">{this.getCost()}</span>
                     </div>
@@ -702,18 +703,18 @@ else {
                               </div>
                               <div className="col-sm">
                                 <label>{operation.QuoteOperationInv && operation.QuoteOperationInv.length}</label>
-                                <button onClick={this.deleteOperation.bind(this,operation.Operations.id,operation.Operations.name)} className="btn delete-btn float-right mr-5" ></button>
+                                <button onClick={this.deleteOperation.bind(this, operation.Operations.id, operation.Operations.name)} className="btn delete-btn float-right mr-5" ></button>
                               </div>
                             </div>
 
                           </Accordion.Toggle>
                           <Accordion.Collapse eventKey={i + ""}>
                             <Card.Body>
-                             {/* 
+                              {/* 
   <button type="button" className="btn btn-blue btn-sm ml-2 pr-4 pl-4" onClick={() => this.showAvailableTools(operation.Operations.id)}>Add Tools</button>
     <button type="button" className="btn btn-blue btn-sm ml-2 pr-4 pl-4" onClick={() => this.showAvailableWorker(operation.Operations.id)}>Add Workers</button>
                                                         
-*/} 
+*/}
                               {operation.QuoteOperationInv.length > 0 && this.showOperationTools(operation.QuoteOperationInv)}
                               {operation.QuoteOperationWorker.length > 0 && this.showOperationWorkers(operation.QuoteOperationWorker)}
                             </Card.Body>
