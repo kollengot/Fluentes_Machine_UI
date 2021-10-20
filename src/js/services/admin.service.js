@@ -372,10 +372,11 @@ class AdminService {
     }
 
     
-    getAllCustomers() {
+
+    getAllCustomers(pageNo) {
         var config = {
             method: 'get',
-            url: API_URL + 'customer'
+            url: API_URL + 'customer?page='+pageNo
         };
 
         return axios(config)

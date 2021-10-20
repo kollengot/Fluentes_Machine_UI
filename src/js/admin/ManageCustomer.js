@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import Popup from "../components/Popup";
 import { validationMessages } from '../common/Constants';
 import EditCustomer from './EditCustomer';
@@ -12,19 +13,35 @@ class ManageCustomer extends Component {
         selectedItem: [],
         editCustomerPage: false,
         popupConfig: {},
-        isPopupOpen: false
+        isPopupOpen: false,
+        hasMoreItems: true,
+        pageNo: 0
     }
-    constructor(props) {
+    /*constructor(props) {
         super(props);
         this.getAllCustomerList();
-    }
+    }*/
+    
     getAllCustomerList() {
-        AdminService.getAllCustomers().then(
+        AdminService.getAllCustomers(this.state.pageNo).then(
             response => {
                 if(response){
+                    var tmpListitems = [];
+                    if(response.data.currentPage !== 0 ){
+                        tmpListitems = [...this.state.listitems, ...response.data.rows];
+                    } else {
+                        tmpListitems = response.data.rows;
+                    }
                     this.setState({
-                        listitems: response.data.rows
+                        listitems: tmpListitems,
+                        pageNo: this.state.pageNo+1
                     });
+
+                    if(this.state.pageNo >= response.data.currentPage) {
+                        this.setState({
+                            hasMoreItems: false
+                        });
+                    }
                 }
             },
             error => {
@@ -171,6 +188,16 @@ class ManageCustomer extends Component {
                     </div>
                 </div>
                 <div className="quote-req-table">
+
+
+                <InfiniteScroll
+                pageStart={0}
+                loadMore={this.getAllCustomerList.bind(this)}
+                hasMore={this.state.hasMoreItems}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+                useWindow={false} >
+
+
                     {this.state.listitems.filter(item =>
                         item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
 
@@ -206,6 +233,8 @@ class ManageCustomer extends Component {
 
                             </div>
                         ))}
+
+</InfiniteScroll>
                 </div>
             </div>
         </div>);
