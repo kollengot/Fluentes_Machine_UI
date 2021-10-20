@@ -211,7 +211,9 @@ class ManageQuote extends Component {
                                     <label>{(new Date(item.updatedAt)).toLocaleDateString()}</label>
                                 </div>
                                 <div className="col-sm">
-                                    <span className={"badge " + statusColorClass(item.status)} >{item.status}</span>
+                                    <span className={"badge " + statusColorClass(item.status)} >
+                                        {item.status === "QUOTE_RECEIVED" ? "QUOTE_SUBMITTED" : item.status}
+                                    </span>
                                 </div>
                                 <div className="col-sm text-right">
                                     <span className="badge attachment-badge">{item.Uploads && item.Uploads.length}</span>

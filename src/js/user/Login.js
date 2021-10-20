@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Card, CardBody, CardGroup, Col, Form, Input, InputGroup, Row } from "reactstrap";
 import { isEmail } from "validator";
-import {loginMessages, usersTag} from '../common/Constants';
+import {loginMessages} from '../common/Constants';
 import MyAlert from "../components/MyAlert";
 import Popup from "../components/Popup";
 import AuthService from "../services/auth.service";
@@ -74,11 +74,19 @@ class Login extends Component {
             AuthService.login(data).then(
                 response => {
                     if (response && response.data) {
-                        if(response.data.userId === usersTag.USER_TAG) {
-                            this.props.history.push("/Dashboard");
-                        } else if(response.data.userId === usersTag.ADMIN_TAG){
+
+                        if(response.data.admin){
                             this.props.history.push("/AdminDashboard");
-                        } 
+                        }  else {
+                            this.props.history.push("/Dashboard");
+                        }
+
+                        /*if(response.data.userId === usersTag.USER_TAG) {
+                            this.props.history.push("/Dashboard");
+                        } else if(response.data.admin === usersTag.ADMIN_TAG){
+                            this.props.history.push("/AdminDashboard");
+                        } */
+
                     } else {
                         this.showAlertMessage(loginMessages.ERROR);
                     }
