@@ -34,7 +34,7 @@ class ManageCustomer extends Component {
                         pageNo: this.state.pageNo+1
                     });
 
-                    if(this.state.pageNo >= response.data.currentPage) {
+                    if((response.data.currentPage+1) == response.data.totalPages) {
                         this.setState({
                             hasMoreItems: false
                         });
@@ -143,7 +143,8 @@ class ManageCustomer extends Component {
         this.setState({
             editCustomerPage: false,
             selectedItem: [],
-            pageNo: 0
+            pageNo: 0,
+            hasMoreItems: true
         });
         if(response && response.data.message){
             this.showPopup(response.data.message);
