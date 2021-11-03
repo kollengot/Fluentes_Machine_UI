@@ -36,6 +36,9 @@ class EditProject extends Component {
         );
       };
     handleChange(propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var item = this.state.item;
         item[propertyName] = event.target.value;
         this.setState({ item: item });
@@ -240,7 +243,7 @@ class EditProject extends Component {
                                 </div>
 
                                 <div className="col">
-                                    <input type="number" className="form-control col-2 d-inline" onChange={this.handleChange.bind(this, 'workerRequired')} />
+                                    <input type="number" className="form-control col-5 d-inline" onChange={this.handleChange.bind(this, 'workerRequired')} />
                                     <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4 d-inline" onClick={this.addWorker.bind(this)}>Add</button>
                                 </div>
 

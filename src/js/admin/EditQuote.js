@@ -126,6 +126,7 @@ class QuoteReqUpdate extends Component {
     var data = {
       "quoteId": this.state.selectedItem.id,
       "status": this.state.selectedItem.status,
+      "tax": this.state.taxCheckboxChecked ? 1 : 0,
       "operations": [
         {
           "operationId": this.state.configOpId,
@@ -137,9 +138,10 @@ class QuoteReqUpdate extends Component {
         }
       ]
     };
+    debugger;
     AdminService.tagQuote(data).then(
       response => {
-        console.log(response);
+        
         if (response)
           this.showPopupMessage(response.data.message);
         else
@@ -452,7 +454,10 @@ class QuoteReqUpdate extends Component {
 
   handleTaxChange(evt) {
     this.setState({ taxCheckboxChecked: evt.target.checked });
+    // assign tax to quote
   };
+
+  
 
   renderMeasureTable() {
     var measures = this.state.selectedItem.Measures;
@@ -575,7 +580,9 @@ class QuoteReqUpdate extends Component {
               <div className="col-3 white-border-right">
                 <div className="quote-data-div">
                   <span className="underline half blue">Title</span>
-                  <span className={"badge p-2 ml-2 float-right " + statusColorClass(this.state.selectedItem.status)}>{this.state.selectedItem.status}</span>
+                  <span className={"badge p-2 ml-2 float-right " + statusColorClass(this.state.selectedItem.status)}>
+                  {this.state.selectedItem.status === "QUOTE_RECEIVED" ? "QUOTE_SUBMITTED" : this.state.selectedItem.status}
+                    </span>
                   <p className="green-text-color">{this.state.selectedItem.title}</p>
                 </div>
 

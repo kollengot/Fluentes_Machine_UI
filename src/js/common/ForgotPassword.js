@@ -6,8 +6,8 @@ import { loginMessages } from '../common/Constants';
 import AuthService from "../services/auth.service";
 
 class ForgotPassword extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             Email: '',
             newData: {
@@ -57,10 +57,13 @@ class ForgotPassword extends Component {
                 console.log(response);
                 var errors = {};
                 if(response && response.data) {
-                    errors["error"] = response.data.message;
+                    errors["resp"] = response.data.message;
                     this.setState({
                         errors: errors
                     });
+                }
+                if(response && response.status === 200) {
+                    this.props.popupClose();
                 }
             },
             error => {

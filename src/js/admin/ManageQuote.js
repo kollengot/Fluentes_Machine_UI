@@ -1,4 +1,4 @@
-import React, { Component, useEffect} from 'react';
+import React, { Component} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 

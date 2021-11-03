@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { isEmail } from "validator";
 import AdminService from "../services/admin.service";
 
 class EditInventory extends Component {
@@ -9,9 +9,26 @@ class EditInventory extends Component {
         errors: {}
     }
     handleChange(propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var item = this.state.item;
         item[propertyName] = event.target.value;
         this.setState({ item: item });
+    }
+    emailValidation() {
+        if (this.state.item.supplierInfo && isEmail(this.state.item.supplierInfo)) {
+            return "";
+        } else {
+            return "disabled";
+         }
+    }
+    sendEmail() {
+        var emailId = this.state.item.supplierInfo;
+        if (this.state.item.supplierInfo && isEmail(this.state.item.supplierInfo)) {
+            //Linking.openURL('mailto:fasfd@fdsf.com');
+        }
+        
     }
     saveInventory() {
         if(this.validateForm()) {
@@ -153,7 +170,8 @@ class EditInventory extends Component {
                                         onChange={this.handleChange.bind(this, 'supplierInfo')} />
                                 </div>
                                 <div className="col-xs-4">
-                                    <a className="btn btn-sm btn-blue m-4 p-2" href="mailto:someone@yoursite.com">Contact Supplier</a>
+                                    <button className={"btn btn-sm btn-blue m-4 p-2 " + this.emailValidation()}
+                                    onClick={this.sendEmail(this)} >Contact Supplier</button>
                                 </div>
                                 <div className="text-danger">{this.state.errors.availability}</div>
                                 <div className="text-danger">{this.state.errors.supplierInfo}</div>

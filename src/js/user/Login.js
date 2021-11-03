@@ -58,6 +58,7 @@ class Login extends Component {
         });
         if(this.state.checkboxChecked) {
             AuthService.loginWorker(data).then(
+                
                 response => {
                     if (response && response.data) {
                         this.props.history.push("/WorkerDashboard");

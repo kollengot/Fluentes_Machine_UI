@@ -17,10 +17,7 @@ class ManageCustomer extends Component {
         hasMoreItems: true,
         pageNo: 0
     }
-    /*constructor(props) {
-        super(props);
-        this.getAllCustomerList();
-    }*/
+   
     
     getAllCustomerList() {
         AdminService.getAllCustomers(this.state.pageNo).then(
@@ -143,14 +140,16 @@ class ManageCustomer extends Component {
         });
     }
     parentCallback = (response) => {
+        this.setState({
+            editCustomerPage: false,
+            selectedItem: [],
+            pageNo: 0
+        });
         if(response && response.data.message){
             this.showPopup(response.data.message);
             this.getAllCustomerList();
         } 
-        this.setState({
-            editCustomerPage: false,
-            selectedItem: []
-        });
+        
     }
     renderCustomerList() {
         return (<div className="col admin-list-page">
