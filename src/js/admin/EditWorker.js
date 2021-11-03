@@ -201,7 +201,7 @@ class EditWorker extends Component {
 
                         </div>
                         <div className="col">
-                            <span> {this.state.item.operations_tagged ? 'Operatios Tagged' : 'No Operatios Tagged'}</span>
+                            <span> {this.state.item.operations_tagged ? 'Operations Tagged' : 'No Operations Tagged'}</span>
                             <div>
                                 {this.state.item.operations_tagged && this.state.item.operations_tagged.map((operation, index) => (
                                     <span className="badge tool-badge">Operation {index + 1} - {operation}</span>
