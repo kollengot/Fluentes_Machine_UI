@@ -491,8 +491,13 @@ class QuoteDetail extends Component {
                             <div className="col-md-2">{this.props.dataFromParent.operationCostTotal}</div>
                             <div className="col-md-8">Inspection Amount</div>
                             <div className="col-md-2">{this.props.dataFromParent.inspectionTotal}</div>
-                            <div className="col-md-8">Tax</div>
-                            <div className="col-md-2">5%</div>
+                            {this.props.dataFromParent.taxApplied &&
+                             <div className="col-md-8">Tax</div>
+                            }
+                            {this.props.dataFromParent.taxApplied && <div className="col-md-2">{this.props.dataFromParent.tax}%</div>}
+                            
+
+
                             <div className="col-md-8">Sub Total</div>
                             <div className="col-md-2">{this.props.dataFromParent.total}</div>
                         </div>

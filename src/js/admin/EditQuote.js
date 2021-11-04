@@ -65,7 +65,8 @@ class QuoteReqUpdate extends Component {
       response => {
         if (response) {
           this.setState({
-            selectedItem: response.data
+            selectedItem: response.data,
+            taxCheckboxChecked: response.data.taxApplied
           });
         }
       },
@@ -454,7 +455,17 @@ class QuoteReqUpdate extends Component {
 
   handleTaxChange(evt) {
     this.setState({ taxCheckboxChecked: evt.target.checked });
-    // assign tax to quote
+    var data = {
+      "status": evt.target.checked
+    };
+    AdminService.applyTax(this.state.selectedItem.id, data).then(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log("Error");
+      }
+    );
   };
 
   
@@ -654,7 +665,7 @@ class QuoteReqUpdate extends Component {
                         ))}
                       </select>
 
-                      Apply Tax <input type="checkbox" onChange={this.handleTaxChange.bind(this)}></input>
+                      Apply Tax <input type="checkbox" onChange={this.handleTaxChange.bind(this)} defaultChecked={this.state.selectedItem.taxApplied}></input>
                       <span className="blue ml-4">Total Cost</span>
                       <span className="badge btn-blue p-2 ml-2">{this.getCost()}</span>
                     </div>
