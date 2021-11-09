@@ -32,6 +32,20 @@ class WorkerService {
                 console.log(error);
             });
     }
+    getAllProjects() {
+        var config = {
+            method: 'get',
+            url: API_URL + 'project'
+        };
+
+        return axios(config)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 export default new WorkerService();

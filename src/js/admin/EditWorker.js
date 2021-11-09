@@ -153,7 +153,7 @@ class EditWorker extends Component {
                             </div>
                             <div>
                                 <span>Phone</span>
-                                <input type="text"
+                                <input type="tel"
                                     className="form-control" defaultValue={this.state.item.phone}
                                     onChange={this.handleChange.bind(this, 'phone')} />
                                 <div className="text-danger">{this.state.errors.phone}</div>

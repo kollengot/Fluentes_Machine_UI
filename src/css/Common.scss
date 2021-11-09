@@ -645,5 +645,12 @@ input[type="number"] {
   }
 }
 
+.e-popup.e-popup-open {
+  display: inline-table;
+}
+.e-quick-popup-wrapper .e-cell-popup .e-popup-content {
+ min-width: 600px;
+}
+
 
 

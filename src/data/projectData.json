@@ -1,9 +1,33 @@
 {
     "totalItems": 1,
     "projects": [
+        {
+            "id": 1,
+            "p_name": "project-1",
+            "p_desc": "description of project",
+            "hours_commited": 12,
+            "hours_left": 4,
+            "start_date": "2021-03-03T00:00:00.000Z",
+            "end_date": "2021-03-09T00:00:00.000Z",
+            "p_status": "IN PROGRESS",
+            "createdAt": "2021-04-05T08:45:17.000Z",
+            "updatedAt": "2021-04-05T08:45:17.000Z"
+        },
          {
             "id": 2,
-            "p_name": "project name",
+            "p_name": "project-2",
+            "p_desc": "description of project",
+            "hours_commited": 12,
+            "hours_left": 4,
+            "start_date": "2021-03-03T00:00:00.000Z",
+            "end_date": "2021-03-09T00:00:00.000Z",
+            "p_status": "IN PROGRESS",
+            "createdAt": "2021-04-05T08:45:17.000Z",
+            "updatedAt": "2021-04-05T08:45:17.000Z"
+        },
+        {
+            "id": 2,
+            "p_name": "P-Three",
             "p_desc": "description of project",
             "hours_commited": 12,
             "hours_left": 4,

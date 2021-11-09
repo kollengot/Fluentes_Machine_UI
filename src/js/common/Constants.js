@@ -17,9 +17,14 @@ export const usersTag = {
 
 /*
 
-Verified
-1. login
-2. sidebar.js, MyAlert.js Popup.js
+1. "Measurements"-->Wants to minimize sign also (-)..[USER]
+2. Send new-->Attachments do not load [USER]
+3. There is no option for delete unwanted attached files. [USER]
+4. Every search bar should have a close button (X).
+5. Admin-->Quotes-->Inspection value does not add. assignQuoteInspection
+
+
+
 
 
 git init .

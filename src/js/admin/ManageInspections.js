@@ -106,6 +106,9 @@ class ManageInspection extends Component {
         });
     }
     handleChange(propertyName, event) {
+        if(event.target.type === 'number') {
+            event.target.value = Math.abs(event.target.value);
+        }
         var item = this.state.selectedItem;
         item[propertyName] = event.target.value;
         this.setState({ selectedItem: item });
