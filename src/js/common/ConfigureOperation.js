@@ -112,14 +112,27 @@ class ConfigureOperation extends Component {
             });
             if (changeEvent.target.checked) {
                 this.state.selectedToolList.push(obj);
-                var tmpCost = this.state.totalCost + (obj.Inventories.cost * obj.Inventories.req_quantity);
+                var tmpCost = 0;
+                if(obj.Inventories.editedCost) {
+                    tmpCost = this.state.totalCost + (parseInt(obj.Inventories.editedCost) * parseInt(obj.Inventories.req_quantity));
+                } else {
+                    tmpCost = this.state.totalCost + (parseInt(obj.Inventories.cost) * parseInt(obj.Inventories.req_quantity));
+                }
+                 
                 this.setState({
                     totalCost: tmpCost
                 });
             } else {
                 let tmpObj = this.state.selectedToolList.filter(item => item.id !== name);
                 this.state.selectedToolList = tmpObj;
-                var tmpCost = this.state.totalCost - (obj.Inventories.cost * obj.Inventories.req_quantity);
+
+
+                var tmpCost = 0;
+                if(obj.Inventories.editedCost) {
+                    tmpCost = this.state.totalCost - (parseInt(obj.Inventories.editedCost) * parseInt(obj.Inventories.req_quantity));
+                } else {
+                    tmpCost = this.state.totalCost - (parseInt(obj.Inventories.cost) * parseInt(obj.Inventories.req_quantity));
+                }
                 this.setState({
                     totalCost: tmpCost
                 });
@@ -142,7 +155,17 @@ class ConfigureOperation extends Component {
             });
             if (changeEvent.target.checked) {
                 this.state.selectedWorkerList.push(obj)
-                var tmpCost = this.state.totalCost + (obj.Workers.cost_per_hr * obj.Workers.total_hrs_req);
+
+                //var tmpCost = this.state.totalCost + (obj.Workers.cost_per_hr * obj.Workers.total_hrs_req);
+
+                var tmpCost = 0;
+                if(obj.Workers.editedCost) {
+                    tmpCost = this.state.totalCost + (parseInt(obj.Workers.editedCost) * parseInt(obj.Workers.total_hrs_req));
+                } else {
+                    tmpCost = this.state.totalCost + (parseInt(obj.Workers.cost_per_hr) * parseInt(obj.Workers.total_hrs_req));
+                }
+
+
                 this.setState({
                     totalCost: tmpCost
                 });
@@ -150,7 +173,16 @@ class ConfigureOperation extends Component {
             } else {
                 let tmpObj = this.state.selectedWorkerList.filter(item => item.id != name);
                 this.state.selectedWorkerList = tmpObj;
-                var tmpCost = this.state.totalCost - (obj.Workers.cost_per_hr * obj.Workers.total_hrs_req);
+
+                var tmpCost = 0;
+                if(obj.Workers.editedCost) {
+                    tmpCost = this.state.totalCost - (parseInt(obj.Workers.editedCost) * parseInt(obj.Workers.total_hrs_req));
+                } else {
+                    tmpCost = this.state.totalCost - (parseInt(obj.Workers.cost_per_hr) * parseInt(obj.Workers.total_hrs_req));
+                }
+
+
+                //var tmpCost = this.state.totalCost - (obj.Workers.cost_per_hr * obj.Workers.total_hrs_req);
                 this.setState({
                     totalCost: tmpCost
                 });
@@ -164,24 +196,23 @@ class ConfigureOperation extends Component {
 
         if(event.target.name === "cost") {
             var toolId = parseInt((event.target.id).replace((event.target.name),''));
-
             let obj = []; obj = this.state.toolList;
-
             if (obj.find(o => o.id == toolId)) {
-                obj.find(o => o.id == toolId)['cost'] = event.target.value;
+                obj.find(o => o.id == toolId)['editedCost'] = event.target.value;
             }
+            this.setState({
+                toolList: obj
+            });
         } 
         if(event.target.name === "cost_per_hr") {
-            debugger;
-
             var workerId = parseInt((event.target.id).replace((event.target.name),''));
-
             let obj = []; obj = this.state.workerList;
-        
             if (obj.find(o => o.id == workerId)) {
-                obj.find(o => o.id == workerId)['cost_per_hr'] = event.target.value;
+                obj.find(o => o.id == workerId)['editedCost'] = event.target.value;
             }
-            
+            this.setState({
+                workerList: obj
+            });
         }
         
     }

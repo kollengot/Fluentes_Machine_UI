@@ -1,7 +1,6 @@
 import React from "react";
 
-const TableRow = ({ type, listItem, reqQty,deleteBtn, isSelected, onreqQntyChange, onCheckboxChange, onDeleteRowClick, handleTableRowChange }) => {
-
+const TableRow = ({ type, listItem, reqQty,editedCost,deleteBtn, isSelected, onreqQntyChange, onCheckboxChange, onDeleteRowClick, handleTableRowChange }) => {
   switch (type) {
     case 'tool':
       return (<tr key="inveRow">
@@ -18,7 +17,7 @@ const TableRow = ({ type, listItem, reqQty,deleteBtn, isSelected, onreqQntyChang
         <td key="3">
         <input
             type="number" 
-            defaultValue={listItem.cost}
+            defaultValue={editedCost ? editedCost : listItem.cost}
             onChange={handleTableRowChange} 
             name="cost"
             id={listItem.id+"cost"}
@@ -54,7 +53,7 @@ const TableRow = ({ type, listItem, reqQty,deleteBtn, isSelected, onreqQntyChang
         <td key="9">
         <input
             type="number" 
-            defaultValue={listItem.cost_per_hr}
+            defaultValue={editedCost ? editedCost : listItem.cost_per_hr}
             onChange={handleTableRowChange} 
             name="cost_per_hr"
             id={listItem.id+"cost_per_hr"}

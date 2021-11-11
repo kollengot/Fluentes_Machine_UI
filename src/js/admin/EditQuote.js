@@ -16,7 +16,7 @@ class QuoteReqUpdate extends Component {
     operationsList: [],
     tagoperationList: [],
     inspectionsList: [],
-    selectedInspection: '',
+    //selectedInspection: '',
     popupConfig: {},
     isPopupOpen: false,
     selectedOperationId: 0,
@@ -104,13 +104,14 @@ class QuoteReqUpdate extends Component {
   }
 
   saveQuoteUpdate() {
-
-
     var tmptoolobj = [];
     this.state.operationsList.QuoteOperationInv && this.state.operationsList.QuoteOperationInv.map((item, i) => {
       var toolobj = {};
       toolobj["invId"] = item.Inventories.id;
       toolobj["reqQty"] = parseInt(item.req_quantity);
+      if(item.Inventories.editedCost) {
+        toolobj["editedCost"] = parseInt(item.Inventories.editedCost);
+      }
       tmptoolobj.push(toolobj);
     });
 
@@ -120,6 +121,9 @@ class QuoteReqUpdate extends Component {
       var workerobj = {};
       workerobj["workerId"] = item.Workers.id;
       workerobj["totalHrs"] = parseInt(item.total_hrs_req);
+      if(item.Workers.editedCost) {
+        workerobj["editedCost"] = parseInt(item.Workers.editedCost);
+      }
       tmpworkerobj.push(workerobj);
     });
 
@@ -131,7 +135,7 @@ class QuoteReqUpdate extends Component {
       "operations": [
         {
           "operationId": this.state.configOpId,
-          "inspection": this.state.selectedInspection,
+          "inspection": this.state.selectedItem.inspection_id,
           "operation_total_hrs": this.state.operationsList.operation_total_hrs,
           "operation_cost": this.state.operationsList.operation_cost,
           "tools": tmptoolobj,
@@ -139,7 +143,6 @@ class QuoteReqUpdate extends Component {
         }
       ]
     };
-    debugger;
     AdminService.tagQuote(data).then(
       response => {
         
@@ -294,7 +297,6 @@ class QuoteReqUpdate extends Component {
     }
     else if (list && this.state.popupConfig.type === "toolsList") {
       console.log(this.state);
-      debugger;
       var obj = this.state.selectedItem.QuoteOperation.find(o => o.Operations.id == this.state.configOpId);
       if (obj) {
         console.log(obj.QuoteOperationInv);
@@ -353,25 +355,34 @@ class QuoteReqUpdate extends Component {
   };
 
   handleInspectionChange(event) {
-    this.setState({
-      selectedInspection: event.target.value
-    });
-    var data = {
-      "inspectionId": event.target.value
-    }
-    AdminService.assignQuoteInspection(this.state.selectedItem.id, data).then(
-      response => {
-        this.showPopupMessage(response.data.message);
-      },
-      error => {
-        console.log("Error");
+
+    
+
+    if(event.target.value !== '') {
+      var data = {
+        "inspectionId": event.target.value
       }
-    );
+      AdminService.assignQuoteInspection(this.state.selectedItem.id, data).then(
+        response => {
+          this.showPopupMessage(response.data.message);
+        },
+        error => {
+          console.log("Error");
+        }
+      );
+      var tmpSelectedItem = this.state.selectedItem;
+    tmpSelectedItem.inspection_id = event.target.value;
+    this.setState({
+      selectedItem: tmpSelectedItem
+    });
+
+    }
 
 
   };
 
   handleOperationChange(event) {
+    if(event.target.value !== '') {
     this.setState({
       configOpId: event.target.value
     });
@@ -384,6 +395,7 @@ class QuoteReqUpdate extends Component {
         type: "configureOperation"
       }
     });
+  }
 
   };
 
@@ -391,7 +403,6 @@ class QuoteReqUpdate extends Component {
 
 
   showOperationTools(inventory) {
-
 
     var tableHeader = ["inputCheckbox", "Tool Name", "Available Quantity", "Cost", "Required Quantity"];
     return (
@@ -406,6 +417,7 @@ class QuoteReqUpdate extends Component {
               type="tool"
               listItem={tool.Inventories}
               reqQty={tool.req_quantity}
+              editedCost = {tool.Inventories.editedCost ? tool.Inventories.editedCost : tool.edited_cost}
               deleteBtn={true}
               onDeleteRowClick={this.onDeleteRowClick}
             />);
@@ -430,6 +442,7 @@ class QuoteReqUpdate extends Component {
               type="worker"
               listItem={item.Workers}
               reqQty={item.total_hrs_req}
+              editedCost = {item.Workers.editedCost ? item.Workers.editedCost : item.edited_cost}
               deleteBtn={true}
               onDeleteRowClick={this.onDeleteRowClick}
             />);
@@ -445,6 +458,14 @@ class QuoteReqUpdate extends Component {
       var totalCost = (this.state.selectedItem.QuoteOperation.reduce((a, v) => a = parseInt(a) + parseInt(v.operation_cost), 0));
       if (this.state.taxCheckboxChecked) {
         totalCost = totalCost + totalCost * (5 / 100);
+      }
+      if (this.state.selectedItem.inspection_id) {
+        debugger;
+        var obj = this.state.inspectionsList.find(o => o.id == this.state.selectedItem.inspection_id);
+        if(obj) {
+          totalCost = totalCost + obj.cost;
+        }
+        
       }
       return (Number((totalCost).toFixed(2)));
     } else {
@@ -650,16 +671,22 @@ class QuoteReqUpdate extends Component {
                     <div className="col text-right">
 
 
-                      <select className="form-control btn-green mb-2 mr-2 col-4 d-inline-block" defaultValue={this.state.selectedItem.InspectionId} onChange={this.handleInspectionChange.bind(this)}>
-                        <option>Add Inspection</option>
+                      <select className="form-control btn-green mb-2 mr-2 col-4 d-inline-block" defaultValue={this.state.selectedItem.inspection_id} onChange={this.handleInspectionChange.bind(this)}>
+                      <option value="" >select Inspection</option>
                         {this.state.inspectionsList && this.state.inspectionsList.map((item, index) => (
-                          <option key={item.id} value={item.id}>{item.name}</option>
+
+ this.state.selectedItem.inspection_id === item.id ?
+<option key={item.id} value={item.id}  selected >{item.name}</option>
+:
+<option key={item.id} value={item.id}  >{item.name}</option>
+
+
                         ))}
                       </select>
 
 
                       <select className="form-control btn-green mb-2 mr-2 col-4 d-inline-block" onChange={this.handleOperationChange.bind(this)}>
-                        <option>Tag Operations</option>
+                        <option value="">Tag Operations</option>
                         {this.state.tagoperationList && this.state.tagoperationList.map((item, index) => (
                           <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
