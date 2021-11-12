@@ -32,12 +32,26 @@ class WorkerService {
                 console.log(error);
             });
     }
-    getAllProjects() {
+    getAllProjects(pageNo) {
         var config = {
             method: 'get',
-            url: API_URL + 'project'
+            url: API_URL + 'worker/all-projects?page='+pageNo
         };
 
+        return axios(config)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    logDailyWork(data) {
+        var config = {
+            method: 'post',
+            url: API_URL + 'worker/',
+            data: data
+        };
         return axios(config)
             .then(function (response) {
                 return response;

@@ -5,47 +5,55 @@ import { Button, Card, CardBody, CardGroup, Form, Input, InputGroup } from "reac
 import WorkerService from "../services/worker.service";
 import jsonData from "../../data/projectData.json";
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
 
 class WorkerSchedule extends Component {
     state = {
-        listitems: jsonData.projects,
-        workLog: [{
-            Id: 1,
-            Subject: 'Meeting - 1',
-            StartTime: new Date(2021, 6, 15, 10, 0),
-            EndTime: new Date(2021, 6, 16, 12, 30),
-            IsAllDay: false
-        }, {
-            Id: 2,
-            Subject: 'Meeting - 2',
-            StartTime: new Date(2021, 8, 15, 10, 0),
-            EndTime: new Date(2021, 8, 16, 12, 30),
-            IsAllDay: false
-        }],
-        currentProject: jsonData.projects[0].p_name,
-        workHors: 8
+        listitems: [],
+        workLog: [],
+        currentProject: '',
+        workHors: 8,
+        hasMoreItems: true,
+        pageNo: 0
     }
     constructor(props) {
         super(props);
-        // this.getAllProjectList();
+        this.getAllProjectList();
     }
     getAllProjectList() {
-        WorkerService.getAllProjects().then(
+        var tmpListitems = [];
+        WorkerService.getAllProjects(this.state.pageNo).then(
             response => {
-                this.setState({
-                    listitems: response.data.projects
-                });
+                if(response){
+                    if(response.data.currentPage !== 0 ){
+                        tmpListitems = [...this.state.listitems, ...response.data.projects];
+                    } else {
+                        tmpListitems = response.data.projects;
+                    }
+                    this.setState({
+                        listitems: tmpListitems,
+                        pageNo: this.state.pageNo+1
+                    });
+                    if((response.data.currentPage+1) == response.data.totalPages) {
+                        this.setState({
+                            hasMoreItems: false
+                        });
+                    }
+                }
             },
             error => {
-                console.log("Error");
+              console.log("Error");
             }
-        );
+          );      
     }
     handleProjectChange(event) {
-        this.setState({
-            currentProject: event.target.value
-        });
+        
+            this.setState({
+                currentProject: event.target.value
+            });
+        
     };
     handleChange(propertyName, event) {
         if (event.target.type === 'number') {
@@ -67,9 +75,17 @@ class WorkerSchedule extends Component {
                             <div className="row">
                                 <span className="col-4">Select projectname</span>
                                 <select defaultValue={this.state.currentProject} className="form-control mb-2 mr-2 col-6 d-inline-block" onChange={this.handleProjectChange.bind(this)}>
+                                    
+                                <option value="" >Select Project</option>
+                                    
                                     {this.state.listitems && this.state.listitems.map((item, index) => (
-                                        <option value={item.p_name}>{item.p_name}</option>
+                                        <option value={item.id} >{item.name}</option>
                                     ))}
+
+
+
+
+
                                 </select>
                             </div>
 
@@ -104,8 +120,29 @@ class WorkerSchedule extends Component {
             </div>
         );
     }
+    logWork() {
+        console.log(this.state.workLog);
+        var data = {
+            "logDailyWork": [
+                {
+                    "logDate": new Date(),
+                    "tag_workers_project_id": this.state.currentProject,
+                    "hoursSpent": 5
+                }
+            ]
+        };
+        WorkerService.logDailyWork(data).then(
+            response => {
+                if(response){
+                    console.log(response);
+                }
+            },
+            error => {
+              console.log("Error");
+            }
+          ); 
+    }
     onActionComplete(args) {
-        console.log(args);
         if (args.requestType === 'toolBarItemRendered') {
             // This block is execute after toolbarItem render
         }
@@ -117,13 +154,17 @@ class WorkerSchedule extends Component {
         }
         if (args.requestType === 'eventCreated') {
             var workLog = this.state.workLog;
-            workLog[workLog.length - 1].Subject = this.state.currentProject;
-            workLog[workLog.length - 1].StartTime.setHours(9, 0, 0, 0);
-            workLog[workLog.length - 1].EndTime.setHours((9 + parseInt(this.state.workHors)), 0, 0, 0);
-            workLog[workLog.length - 1].IsAllDay = false;
-            this.setState({
-                workLog: workLog
-            });
+            var obj = this.state.listitems.find(o => o.id == this.state.currentProject);
+            if(obj) {
+                workLog[workLog.length - 1].Subject = obj.name;
+                workLog[workLog.length - 1].StartTime.setHours(9, 0, 0, 0);
+                workLog[workLog.length - 1].EndTime.setHours((9 + parseInt(this.state.workHors)), 0, 0, 0);
+                workLog[workLog.length - 1].IsAllDay = false;
+                this.setState({
+                    workLog: workLog
+                });
+                this.logWork();
+            }
         }
         if (args.requestType === 'eventChanged') {
             // This block is execute after an appointment change

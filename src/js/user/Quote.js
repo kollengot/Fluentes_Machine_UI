@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import UserService from "../services/user.service";
 
 import MyAlert from "../components/MyAlert";
+import Popup from "../components/Popup";
 
 const today = new Date();
 class UserQuote extends Component {
@@ -18,7 +19,9 @@ class UserQuote extends Component {
             alertConfig: {
                 "variant": "danger"
             },
-            reloadKey: 1
+            reloadKey: 1,
+            popupConfig: {},
+            isPopupOpen: false
         }
         this.state.item['measures'] = [
             {
@@ -109,6 +112,7 @@ class UserQuote extends Component {
     }
 
     handleFileInput(e) {
+        debugger;
         const file = e.target.files[0];
         if (file) {
             const config = {
@@ -181,7 +185,21 @@ class UserQuote extends Component {
         tmpObj.measures = this.state.item.measures.filter(o => o.id !== id);
         this.setState({ item: tmpObj });
     }
-
+    handleClose = () => {
+        this.setState({
+            isPopupOpen: false
+        });
+    }
+    showUploadImage(filePath) {
+        this.setState({
+            isPopupOpen: true,
+            popupConfig: {
+                header: "Uploaded Data",
+                body: filePath,
+                type: "image"
+            }
+        });
+    }
 
     render() {
         return (
@@ -301,10 +319,27 @@ class UserQuote extends Component {
                             Browse <input type="file" hidden onChange={this.handleFileInput.bind(this)} />
                         </label>
                     </div>
+
+                    {this.state.item.uploads && this.state.item.uploads.map((item, index) => {
+                    return (
+                        <div className="row pb-2" >
+                            <div className="col pl-0">
+                                <button className="btn btn-link" onClick={() => this.showUploadImage(item.filePath)}>{item.fileName}</button>
+                            </div>
+                        </div>
+                    )
+                })
+    
+                }
+
+
+
+
                     {this.state.showAlert && < MyAlert alertConfig={this.state.alertConfig} />}
                 </div>
-
+                <Popup popupConfig={this.state.popupConfig} openFlag={this.state.isPopupOpen} parentCloseCallback={this.handleClose} ></Popup>
             </div>
+            
         );
     }
 }

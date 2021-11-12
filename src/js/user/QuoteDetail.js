@@ -548,20 +548,16 @@ class QuoteDetail extends Component {
                                 <button type="button" className="btn btn-green btn-sm pr-2 pl-2" >Submit PO</button>
                             </p>
                         </div>
-
                     </div>
                     <div>
                         <span className="underline blue" >Measurements</span>
                     </div>
-
                     {this.renderMeasurementHeader()}
                     {this.props.dataFromParent.Measures && this.props.dataFromParent.Measures.map((x, i) => {
                         return (this.renderMeasurements(x, i));
                     })}
-
                     <div>
                         <span className="underline blue" >Attachments</span>
-
                         <div className="row mt-1">
                             {this.props.dataFromParent.Uploads && this.props.dataFromParent.Uploads.map((item) => {
                                 return (
@@ -571,7 +567,6 @@ class QuoteDetail extends Component {
                                 )
                             })}
                         </div>
-
                     </div>
                 </div>*/
 
@@ -614,7 +609,4 @@ class QuoteDetail extends Component {
     }
 }
 export default QuoteDetail;
-
-
-
 

@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import {statusColorClass} from '../common/Utils.js';
 
-import AdminService from "../services/admin.service";
-
-import jsonData from "../../data/projectData.json";
+import WorkerService from "../services/worker.service";
 
 class WorkerProjects extends Component {
     state = {
         searchValue: "",
-        listitems: jsonData.projects,
+        listitems: [],
         selectedItem: [],
-        editProjectPage: false
+        editProjectPage: false,
+        hasMoreItems: true,
+        pageNo: 0
     }
-    constructor(props) {
-        super(props);
-        //this.getAllProjectList();
-    }
+    
     getAllProjectList() {
-        AdminService.getAllProjects().then(
+        var tmpListitems = [];
+        WorkerService.getAllProjects(this.state.pageNo).then(
             response => {
-                this.setState({
-                    listitems: response.data.projects
-                });
+                if(response){
+                    if(response.data.currentPage !== 0 ){
+                        tmpListitems = [...this.state.listitems, ...response.data.projects];
+                    } else {
+                        tmpListitems = response.data.projects;
+                    }
+                    this.setState({
+                        listitems: tmpListitems,
+                        pageNo: this.state.pageNo+1
+                    });
+                    if((response.data.currentPage+1) == response.data.totalPages) {
+                        this.setState({
+                            hasMoreItems: false
+                        });
+                    }
+                }
             },
             error => {
               console.log("Error");
             }
-          );
-          
+          );      
     }
     handleSearchChange(e) {
         this.setState({
@@ -94,8 +105,17 @@ class WorkerProjects extends Component {
                         </div>
                         <div className="quote-req-table">
                         
-                            {this.state.listitems.filter(item =>
-                                item.p_name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
+
+                        <InfiniteScroll
+                pageStart={0}
+                loadMore={this.getAllProjectList.bind(this)}
+                hasMore={this.state.hasMoreItems}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+                useWindow={false} >
+
+
+                            {this.state.listitems && this.state.listitems.filter(item =>
+                                item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
 
                                     <div className="row mt-1" key={listitem.id}>
                                         <div className="col-sm" >
@@ -103,18 +123,12 @@ class WorkerProjects extends Component {
                                                 <input type="radio" className="toggle"
                                                     name="projectItem" value={listitem.id}
                                                     onChange={() => this.onProjectSelected(listitem)} />
-                                                {listitem.p_name}
+                                                {listitem.name}
                                             </label>
                                             
                                         </div>
                                         <div className="col-sm" >
-                                            <label className="description-truncate text-truncate">{listitem.p_desc}</label>
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label>{listitem.hours_commited}</label>
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label>{listitem.hours_left}</label>
+                                            <label className="description-truncate text-truncate">{listitem.desc}</label>
                                         </div>
                                         <div className="col-sm" >
                                             <label>{(new Date(listitem.start_date)).toLocaleDateString()}</label>
@@ -123,10 +137,16 @@ class WorkerProjects extends Component {
                                             <label>{(new Date(listitem.end_date)).toLocaleDateString()}</label>
                                         </div>
                                         <div className="col-sm" >
-                                            <label className = {"badge " + statusColorClass(listitem.p_status)} >{listitem.p_status}</label>
+                                            <label className = {"badge " + statusColorClass(listitem.status)} >{listitem.status}</label>
                                         </div>
                                     </div>
                                 ))}
+
+
+
+
+</InfiniteScroll>
+
                         </div>
                     </div>
                 </div>
