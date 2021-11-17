@@ -3,22 +3,18 @@ import S3 from 'react-aws-s3';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UserService from "../services/user.service";
-
-import MyAlert from "../components/MyAlert";
 import Popup from "../components/Popup";
 
 const today = new Date();
+today.setDate(today.getDate() + 1);
 class UserQuote extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             item: {},
+            errors: {},
             measuresObjId: 1,
-            showAlert: false,
-            alertConfig: {
-                "variant": "danger"
-            },
             reloadKey: 1,
             popupConfig: {},
             isPopupOpen: false
@@ -51,41 +47,39 @@ class UserQuote extends Component {
     }
 
 
-    formValidation(event) {
-        let errors = '';
+    formValidation() {
+        
+        let errors = {};
+        let isValid = true;
+        
         if (!this.state.item.title) {
-            errors += 'Title';
+            isValid = false;
+            errors["title"] = "Please enter Title";
         }
-        if (!this.state.item.desc) {
-            errors += ' Description';
+        if(!this.state.item.desc) {
+            isValid = false;
+            errors["desc"] = "Please enter Description";
         }
-        if (!this.state.item.startDate) {
-            errors += ' Start date';
+        if(!this.state.item.startDate) {
+            isValid = false;
+            errors["date"] = "Please enter start Date";
         }
-        if (!this.state.item.endDate) {
-            errors += ' End date';
+        if(!this.state.item.endDate) {
+            isValid = false;
+            errors["date"] = "Please enter End Date";
         }
-
-        if (errors !== '') {
-            this.setState(prevState => ({
-                alertConfig: {
-                    ...prevState.alertConfig,
-                    message: errors + ' are required!'
-                },
-                showAlert: true
-            }));
-        } else {
-            this.sendQuoteReq();
-        }
+        this.setState({
+            errors: errors
+        });
+        return isValid;
 
     }
 
 
     sendQuoteReq() {
 
-
-
-
+        if(this.formValidation()) {
+            
         let newMeasuresArray = this.state.item.measures.map(function (item) {
             delete item.id;
             return item;
@@ -108,11 +102,12 @@ class UserQuote extends Component {
                 console.log("Error");
             }
         );
+        }
 
     }
 
     handleFileInput(e) {
-        debugger;
+
         const file = e.target.files[0];
         if (file) {
             const config = {
@@ -211,7 +206,7 @@ class UserQuote extends Component {
                     </div>
                     <div className="col text-right">
                         <button type="button" className="btn btn-blue btn-sm pr-4 pl-4" onClick={() => this.resetQuote()} >Reset</button>
-                        <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.formValidation()}>Send</button>
+                        <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4" onClick={() => this.sendQuoteReq()}>Send</button>
                     </div>
                 </div>
                 <div className="blue-box-div" id="create-quote-form" key={this.state.reloadKey}>
@@ -223,6 +218,7 @@ class UserQuote extends Component {
                             defaultValue={this.state.item.title}
                             onChange={this.handleFormChange.bind(this, 'title')}
                         />
+                        <div className="text-danger">{this.state.errors.title}</div>
                     </div>
 
                     <div className="form-group">
@@ -233,6 +229,7 @@ class UserQuote extends Component {
                             onChange={this.handleFormChange.bind(this, 'desc')}
 
                         ></textarea>
+                        <div className="text-danger">{this.state.errors.desc}</div>
                     </div>
 
                     <div className="form-group row">
@@ -254,7 +251,9 @@ class UserQuote extends Component {
                                 minDate={this.state.item.startDate}
                             />
                         </div>
+                        
                     </div>
+                    <div className="text-danger">{this.state.errors.date}</div>
 
                     <div className="form-group">
                         <label>Measurements</label>
@@ -332,10 +331,6 @@ class UserQuote extends Component {
     
                 }
 
-
-
-
-                    {this.state.showAlert && < MyAlert alertConfig={this.state.alertConfig} />}
                 </div>
                 <Popup popupConfig={this.state.popupConfig} openFlag={this.state.isPopupOpen} parentCloseCallback={this.handleClose} ></Popup>
             </div>
