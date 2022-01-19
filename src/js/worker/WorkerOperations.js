@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SubHeader from '../components/SubHeader.js';
-import TableHeader from '../components/TableHeader.js';
+import TableListHeader from '../components/TableListHeader.js';
 import jsonData from "../../data/operationsData.json";
 import AdminService from "../services/admin.service";
 
@@ -67,7 +67,7 @@ class WorkerOperations extends Component {
             <div className="col admin-list-page" id="operations-page">
                <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
                 <div className="quote-req-list">
-                    <TableHeader headerObj={workerProjectTH} />
+                    <TableListHeader headerObj={workerProjectTH} />
                     <div className="quote-req-table">
 
                         {this.state.listitems.filter(item =>

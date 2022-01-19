@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { statusColorClass } from '../common/Utils.js';
 import SubHeader from '../components/SubHeader.js';
-import TableHeader from '../components/TableHeader.js';
+import TableListHeader from '../components/TableListHeader.js';
 import WorkerService from "../services/worker.service";
 
 const workerProjectTH = ['Project Name', 'Description', 'Start Date', 'End Date', 'Status'];
@@ -79,7 +79,7 @@ class WorkerProjects extends Component {
             <div className="col admin-list-page" id="projects-page">
                 <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
                 <div className="quote-req-list">
-                    <TableHeader headerObj={workerProjectTH} />
+                    <TableListHeader headerObj={workerProjectTH} />
 
                     <div className="quote-req-table">
                         <InfiniteScroll

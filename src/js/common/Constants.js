@@ -23,10 +23,6 @@ export const usersTag = {
 4. Every search bar should have a close button (X).
 5. Admin-->Quotes-->Inspection value does not add. assignQuoteInspection
 
-
-
-
-
 git init .
 git add .
 git commit -a -m "commit message goes here"
