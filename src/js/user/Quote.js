@@ -7,6 +7,7 @@ import Popup from "../components/Popup";
 
 const today = new Date();
 today.setDate(today.getDate() + 1);
+
 class UserQuote extends Component {
 
     constructor(props) {
@@ -255,7 +256,7 @@ class UserQuote extends Component {
                     </div>
                     <div className="text-danger">{this.state.errors.date}</div>
 
-                    <div className="form-group">
+                    <div className="form-group measure-cntr">
                         <label>Measurements</label>
                         <button className="btn add-btn" onClick={() => this.addMeasuresClick()}></button>
 

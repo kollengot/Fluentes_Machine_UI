@@ -9,15 +9,18 @@ import Popup from "../components/Popup";
 
 const today = new Date();
 class QuoteDetail extends Component {
-    state = {
-        formInputList: this.props.dataFromParent.Measures,
-        selectedItem: this.props.dataFromParent,
-        measuresObjId: this.props.dataFromParent.Measures && this.props.dataFromParent.Measures.length,
-        popupConfig: {},
-        isPopupOpen: false
-    }
+    
     constructor(props) {
         super(props);
+        this.state = {
+            formInputList: this.props.dataFromParent.Measures,
+            selectedItem: this.props.dataFromParent,
+            measuresObjId: this.props.dataFromParent.Measures && this.props.dataFromParent.Measures.length,
+            popupConfig: {},
+            isPopupOpen: false
+        }
+    }
+    componentDidMount() {
         let newMeasuresArray = this.state.selectedItem.Measures && this.state.selectedItem.Measures.map(function (item, index) {
             item.id = index + 1;
             return item;
@@ -380,7 +383,7 @@ class QuoteDetail extends Component {
                         Browse <input type="file" hidden onChange={this.handleBrowseFileInput.bind(this)} />
                         </label>
 
-                        <div className="col-3 attachment-icon">
+                        <div className="pl-4 col-3 attachment-icon">
                             <small>{selectedQuote.Uploads && selectedQuote.Uploads.length}</small>
                             <small>Attachments</small>
                         </div>

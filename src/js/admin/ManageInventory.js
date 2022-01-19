@@ -166,18 +166,16 @@ class ManageInventory extends Component {
             </div>
             <div className="quote-req-list">
                 <div className="row mt-1 quote-req-header">
-                    <div className="col-2">
+                    <div className="col-3">
                         <label>Item Name</label>
                     </div>
-                    <div className="col-3">
+                    <div className="col-4">
                         <label>Description</label>
                     </div>
                     <div className="col-1">
                         <label>Availability</label>
                     </div>
-                    <div className="col-sm">
-                        <label>Operations Taged</label>
-                    </div>
+                    
                     <div className="col-1">
                         <label>Cost</label>
                     </div>
@@ -205,7 +203,7 @@ class ManageInventory extends Component {
                         <div className="row mt-1" key={listitem.id}>
                             
                             
-                            <div className="col-2" >
+                            <div className="col-3" >
                                 <label className="btn btn-default blue projectname-truncate text-truncate">
                                     <input type="radio" className="toggle"
                                         name="quoteItem" value={listitem.id}
@@ -217,23 +215,13 @@ class ManageInventory extends Component {
 
 
 
-                            <div className="col-3" >
+                            <div className="col-4" >
                                 <label className="description-truncate text-truncate">{listitem.itemDesc}</label>
                             </div>
                             <div className="col-1" >
                                 <label>{listitem.availability}</label>
                             </div>
-                            <div className="operation-div col-sm" >
-
-                           
-        <label className="operation-text-truncate">{listitem.operations_tagged}</label>
-        <span className="badge badge-light float-right">{listitem.operations_tagged && listitem.operations_tagged.length}</span>
-        
-      
-
-                                
                             
-                                </div>
                             <div className="col-1" >
                                 <label>{listitem.cost}</label>
                             </div>

@@ -1,33 +1,29 @@
 import React, { Component} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-
-
 import AdminService from "../services/admin.service";
 import EditQuote from './EditQuote';
+import SubHeader from '../components/SubHeader.js';
 
 import Popup from "../components/Popup";
 import { validationMessages } from '../common/Constants';
 import { statusColorClass } from '../common/Utils.js';
 
-class ManageQuote extends Component {
+const headerText = ['Quote', 'Requests'];
 
-    state = {
-        searchValue: "",
-        selectedItem: [],
-        listitems: [],
-        updateQuotePage: false,
-        popupConfig: {},
-        isPopupOpen: false,
-        hasMoreItems: true,
-        pageNo: 0
-    }
+class ManageQuote extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            searchValue: "",
+            selectedItem: [],
+            listitems: [],
+            updateQuotePage: false,
+            popupConfig: {},
+            isPopupOpen: false,
+            hasMoreItems: true,
+            pageNo: 0
+        }
     }
-
-
-    
-      
     render() {
         return (
             <React.Fragment>
@@ -40,7 +36,6 @@ class ManageQuote extends Component {
         AdminService.getAllQuotes(this.state.pageNo).then(
             response => {
                 if(response){
-                    //var tmpListitems = this.state.listitems.concat(response.data.rows);
                     var tmpListitems = [...this.state.listitems, ...response.data.rows];
                     this.setState({
                         listitems: tmpListitems,
@@ -138,24 +133,14 @@ class ManageQuote extends Component {
     renderQuoteList() {
         return (
 
-        
         <div className="col admin-list-page">
-            <div className="list-group-header section-header row">
-                <div className="col-4">
-                    <span className="mb-1 underline">Quote</span>
-                    <span className="mb-1 blue-color pl-2">Requests</span>
-                </div>
-                <div className="col-8 text-right">
-                    <div className="has-search">
-                        <span className="fa fa-search form-control-feedback"></span>
-                        <input type="text" className="form-control search-box" placeholder="Search quote requests..." onChange={this.handleSearchChange.bind(this)} />
-                    </div>
-                    
-                    <button className="btn edit-btn" onClick={() => this.editQuote()}></button>
-
-                </div>
-            </div>
+            <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
+            {/** 
+             <button className="btn edit-btn" onClick={() => this.editQuote()}></button>
+            */}
+            
             <div className="quote-req-list">
+            
                 <div className="row mt-1 quote-req-header">
                     <div className="col-4">
                         <label>Title</label>
@@ -185,9 +170,6 @@ class ManageQuote extends Component {
                 loader={<div className="loader" key={0}>Loading ...</div>}
                 useWindow={false}
             >
-               
-
-
 
                {this.state.listitems && this.state.listitems.filter(item =>
                         item.title.toLowerCase().includes(this.state.searchValue)).map(item => (
@@ -221,22 +203,7 @@ class ManageQuote extends Component {
                             </div>
                         ))}
 
-
-
-
-
-
             </InfiniteScroll>
-
-
-                    
-
-
-
-
-
-
-
 
                 </div>
             </div>

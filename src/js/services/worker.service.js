@@ -46,6 +46,20 @@ class WorkerService {
                 console.log(error);
             });
     }
+    getLogData() {
+        var config = {
+            method: 'get',
+            url: API_URL + 'worker'
+        };
+
+        return axios(config)
+            .then(function (response) {
+                return response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     logDailyWork(data) {
         var config = {
             method: 'post',

@@ -21,6 +21,13 @@ body,
 .page-body::-webkit-scrollbar {
   display: none;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="col-"] {
+    width: 100%;
+  }
+}
 /******************** Page Ends Here ********************************/
 
 /***************** Login Starts here ********************************/
@@ -652,5 +659,8 @@ input[type="number"] {
  min-width: 600px;
 }
 
-
+.measure-cntr {
+  max-height: 360px;
+  overflow: auto;
+}
 

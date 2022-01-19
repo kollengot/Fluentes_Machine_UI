@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import Popup from "../components/Popup";
 
@@ -12,13 +12,34 @@ import QuoteDetail from './QuoteDetail';
 import UserService from "../services/user.service";
 
 class Dashboard extends Component {
-  state = {
-    isQuoteDetailActive: false,
-    quoteItem: null,
-    selectedQuoteId: null,
-    popupConfig: {},
-    isPopupOpen: false,
-    reloadKey: 0
+  constructor(){
+    super();
+    this.state = {
+      isQuoteDetailActive: false,
+      quoteItem: null,
+      selectedQuoteId: null,
+      popupConfig: {},
+      isPopupOpen: false,
+      reloadKey: 0
+    }
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <Popup popupConfig={this.state.popupConfig} openFlag={this.state.isPopupOpen} parentCloseCallback={this.handleClose.bind(this)}></Popup>
+        <Header />
+        <div className="page-body row">
+          <div className="col">
+            <QuoteList parentCallback={this.selectedOuoteItem} key={this.state.reloadKey}/>
+          </div>
+          <div className="col">
+            {!this.state.isQuoteDetailActive ? <Quote parentCreateCallBack={this.quoteCreateCallBack} /> : null}
+            {this.state.isQuoteDetailActive ? <QuoteDetail parentDeletecallBack = {this.quoteDeletecallBack} parentEditCallBack={this.quoteEditCallBack} parentEditButtonCallBack ={this.quoteEdit} isQuoteEditActive={this.state.isQuoteEditActive} dataFromParent={this.state.quoteItem} parentCallback={this.selectedOuoteItem} /> : null}
+          </div>
+        </div>
+        <Footer></Footer>
+      </React.Fragment>
+    );
   }
   selectedOuoteItem = (childData) => {
     if (childData !== undefined) {
@@ -113,23 +134,6 @@ class Dashboard extends Component {
     });
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <Popup popupConfig={this.state.popupConfig} openFlag={this.state.isPopupOpen} parentCloseCallback={this.handleClose.bind(this)}></Popup>
-        <Header />
-        <div className="page-body row">
-          <div className="col">
-            <QuoteList parentCallback={this.selectedOuoteItem} key={this.state.reloadKey}/>
-          </div>
-          <div className="col">
-            {!this.state.isQuoteDetailActive ? <Quote parentCreateCallBack={this.quoteCreateCallBack} /> : null}
-            {this.state.isQuoteDetailActive ? <QuoteDetail parentDeletecallBack = {this.quoteDeletecallBack} parentEditCallBack={this.quoteEditCallBack} parentEditButtonCallBack ={this.quoteEdit} isQuoteEditActive={this.state.isQuoteEditActive} dataFromParent={this.state.quoteItem} parentCallback={this.selectedOuoteItem} /> : null}
-          </div>
-        </div>
-        <Footer></Footer>
-      </React.Fragment>
-    );
-  }
+  
 }
 export default Dashboard;

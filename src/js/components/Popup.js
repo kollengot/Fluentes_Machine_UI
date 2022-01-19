@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import Modal from "react-bootstrap/Modal";
-import ForgotPassword from "../common/ForgotPassword";
-import OperationList from "../common/OperationList";
-import ConfigureOperation from "../common/ConfigureOperation";
-import Profiile from "../common/Profile";
+import ForgotPassword from "./ForgotPassword";
+import OperationList from "./OperationList";
+import ConfigureOperation from "./ConfigureOperation";
+import Profiile from "./Profile";
 
 class Popup extends React.Component {
 

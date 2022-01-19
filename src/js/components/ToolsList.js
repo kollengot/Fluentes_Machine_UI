@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Checkbox from "../components/Checkbox";
-
-
-
 class ToolsList extends Component {
 
     constructor() {

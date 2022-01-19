@@ -1,25 +1,17 @@
 import React from "react";
 
-const TableHeader = ({ headerObj, onCheckboxChange }) => {
-
+const TableHeader = ({ headerObj }) => {
   return (
-    <tr className="green-text-color2" key="tableHeade">
+    <div className="row mt-1 quote-req-header">
       {headerObj && headerObj.map((item, i) => {
-          if (item == "inputCheckbox") {
-            return (
-              <th key="0" >
-                <input type="checkbox" name="selectAllTools" />
-              </th>
-            )
-          } else {
-            return (
-              <th key={item}>{item}</th>
-            )
-          }
-        }
+        return (
+          <div key={i} className="col-sm">
+            <label>{item}</label>
+          </div>
+        )
+      }
       )}
-    </tr>
+    </div>
   );
 }
-
 export default TableHeader;
