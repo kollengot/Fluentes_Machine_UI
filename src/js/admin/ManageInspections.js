@@ -151,7 +151,7 @@ class ManageInspection extends Component {
     saveInspection() {
         if(this.validateForm()) {
             if(this.state.selectedItem.id !== undefined) {
-                var data = {
+                let data = {
                     "name": this.state.selectedItem.name,
                     "cost": parseInt(this.state.selectedItem.cost),
                     "desc": this.state.selectedItem.desc
@@ -168,7 +168,7 @@ class ManageInspection extends Component {
                     }
                   );
             } else {
-                var data = {
+                let data = {
                     "name": this.state.selectedItem.name,
                     "cost": parseInt(this.state.selectedItem.cost),
                     "desc": this.state.selectedItem.desc

@@ -72,6 +72,7 @@ class Sidebar extends Component {
             ];
         }
         this.state.leftMenu = menu
+        
     }
     selectMenuItem(id) {
         this.setState({ activeLink: id });

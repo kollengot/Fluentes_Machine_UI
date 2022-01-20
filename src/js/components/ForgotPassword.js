@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Form, Input, InputGroup } from "reactstrap";
-import { isEmail } from "validator";
-
-import { loginMessages } from '../common/Constants';
 import AuthService from "../services/auth.service";
 
 class ForgotPassword extends Component {

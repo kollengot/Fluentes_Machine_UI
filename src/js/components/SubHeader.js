@@ -9,7 +9,7 @@ const SubHeader = ({ headerText, onSearchChange }) => (
         <div className="col-8 text-right">
             <div className="has-search">
                 <span className="fa fa-search form-control-feedback"></span>
-                <input type="text" className="form-control search-box" placeholder="Search projects..." onChange={onSearchChange} />
+                <input type="text" className="form-control search-box" placeholder="Search here..." onChange={onSearchChange} />
             </div>
         </div>
     </div>

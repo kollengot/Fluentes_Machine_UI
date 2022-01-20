@@ -74,7 +74,7 @@ class EditOperations extends Component {
         this.setState({ item: item });
     }
     handleToolSelection(event) {
-        var selectedTool = this.state.toolsList.find(o => o.id == event.target.value);
+        var selectedTool = this.state.toolsList.find(o => o.id === event.target.value);
         var newToolItem = {
             "Inventories": selectedTool,
             "req_avail": this.state.item.toolRequired
@@ -107,11 +107,11 @@ class EditOperations extends Component {
             if (this.state.item.id) {
 
                 this.state.selectedTool['req_avail'] = this.state.item.toolRequired;
-                var selectedOperation = this.state.item;
+                let selectedOperation = this.state.item;
                 selectedOperation.OperationInventories.push(this.state.selectedTool);
                 this.setState({ item: selectedOperation });
             } else {
-                var selectedOperation = this.state.item;
+                let selectedOperation = this.state.item;
                 if (!selectedOperation.OperationInventories) {
                     selectedOperation['OperationInventories'] = [];
                 }

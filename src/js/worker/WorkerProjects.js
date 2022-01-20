@@ -24,7 +24,50 @@ class WorkerProjects extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.renderProjectList()}
+               <div className="col admin-list-page" id="projects-page">
+                <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
+                <div className="quote-req-list">
+                    <TableListHeader headerObj={workerProjectTH} />
+
+                    <div className="quote-req-table">
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={this.getAllProjectList.bind(this)}
+                            hasMore={this.state.hasMoreItems}
+                            loader={<div className="loader" key={0}>Loading ...</div>}
+                            useWindow={false} >
+
+                            {this.state.listitems && this.state.listitems.filter(item =>
+                                item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
+
+                                    <div className="row mt-1" key={listitem.id}>
+                                        <div className="col-sm" >
+                                            <label className="btn btn-default blue projectname-truncate text-truncate">
+                                                <input type="radio" className="toggle"
+                                                    name="projectItem" value={listitem.id}
+                                                    onChange={() => this.onProjectSelected(listitem)} />
+                                                {listitem.name}
+                                            </label>
+
+                                        </div>
+                                        <div className="col-sm" >
+                                            <label className="description-truncate text-truncate">{listitem.desc}</label>
+                                        </div>
+                                        <div className="col-sm" >
+                                            <label>{(new Date(listitem.start_date)).toLocaleDateString()}</label>
+                                        </div>
+                                        <div className="col-sm" >
+                                            <label>{(new Date(listitem.end_date)).toLocaleDateString()}</label>
+                                        </div>
+                                        <div className="col-sm" >
+                                            <label className={"badge " + statusColorClass(listitem.status)} >{listitem.status}</label>
+                                        </div>
+                                    </div>
+                                ))}
+                        </InfiniteScroll>
+                    </div>
+                </div>
+            </div>
             </React.Fragment>
         );
     }
@@ -74,53 +117,6 @@ class WorkerProjects extends Component {
         });
     }
 
-    renderProjectList() {
-        return (
-            <div className="col admin-list-page" id="projects-page">
-                <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
-                <div className="quote-req-list">
-                    <TableListHeader headerObj={workerProjectTH} />
-
-                    <div className="quote-req-table">
-                        <InfiniteScroll
-                            pageStart={0}
-                            loadMore={this.getAllProjectList.bind(this)}
-                            hasMore={this.state.hasMoreItems}
-                            loader={<div className="loader" key={0}>Loading ...</div>}
-                            useWindow={false} >
-
-                            {this.state.listitems && this.state.listitems.filter(item =>
-                                item.name.toLowerCase().includes(this.state.searchValue)).map(listitem => (
-
-                                    <div className="row mt-1" key={listitem.id}>
-                                        <div className="col-sm" >
-                                            <label className="btn btn-default blue projectname-truncate text-truncate">
-                                                <input type="radio" className="toggle"
-                                                    name="projectItem" value={listitem.id}
-                                                    onChange={() => this.onProjectSelected(listitem)} />
-                                                {listitem.name}
-                                            </label>
-
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label className="description-truncate text-truncate">{listitem.desc}</label>
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label>{(new Date(listitem.start_date)).toLocaleDateString()}</label>
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label>{(new Date(listitem.end_date)).toLocaleDateString()}</label>
-                                        </div>
-                                        <div className="col-sm" >
-                                            <label className={"badge " + statusColorClass(listitem.status)} >{listitem.status}</label>
-                                        </div>
-                                    </div>
-                                ))}
-                        </InfiniteScroll>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    
 }
 export default WorkerProjects;

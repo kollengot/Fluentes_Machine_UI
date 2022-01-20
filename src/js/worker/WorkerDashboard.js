@@ -28,8 +28,7 @@ class WorkerDashboard extends React.Component {
                         switch (this.state.pageName) {
                             case 1:
                                 return (
-                                    <WorkerProjects></WorkerProjects>
-                                    
+                                    <WorkerProjects></WorkerProjects>    
                                 )
                             case 2:
                                 return (
@@ -37,8 +36,7 @@ class WorkerDashboard extends React.Component {
                                 )
                             case 3:
                                 return(
-                                    <WorkerSchedule></WorkerSchedule>
-                                    
+                                    <WorkerSchedule></WorkerSchedule>    
                                 )
                             default:
                                 return (

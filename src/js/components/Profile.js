@@ -48,7 +48,7 @@ class Profile extends Component {
     }
     saveProfile() {
         if(this.state.userId === usersTag.USER_TAG) {
-            var data = {
+            let data = {
                 "name": this.state.item.name,
                 "email": this.state.item.email,
                 "phone": this.state.item.phone,
@@ -73,7 +73,7 @@ class Profile extends Component {
             );
 
         } else if(this.state.userId === usersTag.WORKER_TAG) {
-            var data = {   
+            let data = {   
                 "name": this.state.item.name,
                 "phone": this.state.item.phone,
                 "address": this.state.item.address,

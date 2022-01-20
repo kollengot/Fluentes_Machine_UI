@@ -30,7 +30,7 @@ class AdminService {
     getAllQuotes(pageNo) {
         var config = {
             method: 'get',
-            url: API_URL + 'quotes' +'?page='+pageNo
+            url: API_URL + 'quotes?page='+pageNo
         };
 
         return axios(config)
@@ -272,7 +272,7 @@ class AdminService {
     getAllInventory(pageNo) {
         var config = {
             method: 'get',
-            url: API_URL + 'inventory' +'?page='+pageNo
+            url: API_URL + 'inventory?page='+pageNo
         };
 
         return axios(config)

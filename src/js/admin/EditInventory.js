@@ -24,7 +24,6 @@ class EditInventory extends Component {
          }
     }
     sendEmail() {
-        var emailId = this.state.item.supplierInfo;
         if (this.state.item.supplierInfo && isEmail(this.state.item.supplierInfo)) {
             //Linking.openURL('mailto:fasfd@fdsf.com');
         }

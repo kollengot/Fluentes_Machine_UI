@@ -36,7 +36,7 @@ class EditCustomer extends Component {
             errors["email"] = "Please enter your email Address.";
         }
         if (typeof this.state.item.email !== "undefined") {
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(this.state.item.email)) {
                 isValid = false;
                 errors["email"] = "Please enter valid email address.";
@@ -47,11 +47,11 @@ class EditCustomer extends Component {
             errors["phone"] = "Please enter your phone number.";
         }
         if (typeof this.state.item.phone !== "undefined") {
-            var pattern = new RegExp(/^[0-9\b]+$/);
+            let pattern = new RegExp(/^[0-9\b]+$/);
             if (!pattern.test(this.state.item.phone)) {
                 isValid = false;
                 errors["phone"] = "Please enter only number.";
-            } else if (this.state.item.phone.length != 10) {
+            } else if (this.state.item.phone.length !== 10) {
                 isValid = false;
                 errors["phone"] = "Please enter valid phone number.";
             }

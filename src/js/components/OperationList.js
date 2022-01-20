@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-
 import AdminService from "../services/admin.service";
-
-import Checkbox from "../components/Checkbox";
-
 class OperationList extends Component {
 
     constructor() {

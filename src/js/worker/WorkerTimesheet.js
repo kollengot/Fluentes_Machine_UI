@@ -49,7 +49,7 @@ class WorkerSchedule extends Component {
                         listitems: tmpListitems,
                         pageNo: this.state.pageNo + 1
                     });
-                    if ((response.data.currentPage + 1) == response.data.totalPages) {
+                    if ((response.data.currentPage + 1) === response.data.totalPages) {
                         this.setState({
                             hasMoreItems: false
                         });
@@ -181,7 +181,7 @@ class WorkerSchedule extends Component {
         }
         if (args.requestType === 'eventCreated') {
             var workLog = this.state.workLog;
-            var obj = this.state.listitems.find(o => o.id == this.state.currentProject);
+            var obj = this.state.listitems.find(o => o.id === this.state.currentProject);
             if (obj) {
                 workLog[workLog.length - 1].Subject = obj.name;
                 workLog[workLog.length - 1].StartTime.setHours(9, 0, 0, 0);

@@ -26,7 +26,7 @@ class Popup extends React.Component {
         return <OperationList popupClose={this.callback}></OperationList>;
       case 'image':
         return <div class="container"> 
-        <iframe class="responsive-iframe"  src={this.props.popupConfig.body}  height="1000" width="1000"></iframe>
+        <iframe title="doc" class="responsive-iframe"  src={this.props.popupConfig.body}  height="1000" width="1000"></iframe>
       </div>;
       case 'profile':
           return <Profiile></Profiile> ;

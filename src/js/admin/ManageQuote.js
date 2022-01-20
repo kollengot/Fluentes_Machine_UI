@@ -2,13 +2,11 @@ import React, { Component} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import AdminService from "../services/admin.service";
 import EditQuote from './EditQuote';
-import SubHeader from '../components/SubHeader.js';
 
 import Popup from "../components/Popup";
 import { validationMessages } from '../common/Constants';
 import { statusColorClass } from '../common/Utils.js';
 
-const headerText = ['Quote', 'Requests'];
 
 class ManageQuote extends Component {
     constructor(props) {
@@ -75,18 +73,6 @@ class ManageQuote extends Component {
         this.setState({
             isPopupOpen: false
         });
-        /*AdminService.deleteQuote(this.state.selectedItem.id).then(
-            response => {
-                var tempList = this.state.listitems.filter(item => item.id !== this.state.selectedItem.id);
-                this.setState({
-                    listitems: tempList,
-                    selectedItem: []
-                });
-            },
-            error => {
-              console.log("Error");
-            }
-          );*/
     };
 
     showPopup(message) {
@@ -99,21 +85,6 @@ class ManageQuote extends Component {
             }
         });
     }
-    /*deleteQuote() {
-        if (this.state.selectedItem && this.state.selectedItem.length === 0) {
-            this.showPopup(validationMessages.NO_ITEM);
-        } else {
-            this.setState({
-                isPopupOpen: true,
-                popupConfig : {
-                    header: "Confirm to Delete",
-                    body:validationMessages.DELETE_CONFIRM+this.state.selectedItem.title,
-                    type: "confirmation"
-                }
-            });
-        }
-    }*/
-
     editQuote() {
         if (this.state.selectedItem && this.state.selectedItem.length === 0) {
             this.showPopup(validationMessages.NO_ITEM);
@@ -134,10 +105,22 @@ class ManageQuote extends Component {
         return (
 
         <div className="col admin-list-page">
-            <SubHeader headerText={headerText} onSearchChange={this.handleSearchChange.bind(this)} />
-            {/** 
-             <button className="btn edit-btn" onClick={() => this.editQuote()}></button>
-            */}
+            
+            <div className="list-group-header section-header row">
+
+                        <div className="col-4">
+                            <span className="mb-1 underline">Manage</span>
+                            <span className="mb-1 blue-color pl-2">Projects</span>
+                        </div>
+
+                        <div className="col-8 text-right">
+                            <div className="has-search">
+                                <span className="fa fa-search form-control-feedback"></span>
+                                <input type="text" className="form-control search-box" placeholder="Search project requests..." onChange={this.handleSearchChange.bind(this)} />
+                            </div>
+                            <button className="btn edit-btn" onClick={() => this.editQuote()}></button>
+                        </div>
+                    </div>
             
             <div className="quote-req-list">
             

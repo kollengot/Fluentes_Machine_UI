@@ -7,7 +7,7 @@ class UserService {
     getAllQuotes(pageNo) {
         var config = {
             method: 'get',
-            url: API_URL + 'quotes' +'?page='+pageNo
+            url: API_URL + 'quotes?page='+pageNo
         };
 
         return axios(config)
