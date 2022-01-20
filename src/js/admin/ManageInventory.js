@@ -8,15 +8,18 @@ import EditInventory from './EditInventory';
 import AdminService from "../services/admin.service";
 
 class ManageInventory extends Component {
-    state = {
-        searchValue: "",
-        listitems: [],
-        selectedItem: [],
-        editInventoryPage: false,
-        popupConfig: {},
-        isPopupOpen: false,
-        hasMoreItems: true,
-        pageNo: 0
+    constructor() {
+        super();
+        this.state = {
+            searchValue: "",
+            listitems: [],
+            selectedItem: [],
+            editInventoryPage: false,
+            popupConfig: {},
+            isPopupOpen: false,
+            hasMoreItems: true,
+            pageNo: 0
+        }
     }
     
     getAllInventoryList() {

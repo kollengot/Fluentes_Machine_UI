@@ -10,22 +10,24 @@ import AdminService from "../services/admin.service";
 import { validationMessages } from '../common/Constants';
 
 class QuoteReqUpdate extends Component {
-  state = {
-    selectedItem: {},
-    open: false,
-    operationsList: [],
-    tagoperationList: [],
-    inspectionsList: [],
-    //selectedInspection: '',
-    popupConfig: {},
-    isPopupOpen: false,
-    selectedOperationId: 0,
-    configOpId: 0,
-    totalCost: 0,
-    taxCheckboxChecked: false
-  }
+  
   constructor(props) {
     super(props);
+    this.state = {
+      selectedItem: {},
+      open: false,
+      operationsList: [],
+      tagoperationList: [],
+      inspectionsList: [],
+      popupConfig: {},
+      isPopupOpen: false,
+      selectedOperationId: 0,
+      configOpId: 0,
+      totalCost: 0,
+      taxCheckboxChecked: false
+    }
+  }
+  componentDidMount() {
     this.getSingleQuote();
     this.getOperations();
     this.getInspections();

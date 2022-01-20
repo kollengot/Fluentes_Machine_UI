@@ -3,10 +3,13 @@ import { isEmail } from "validator";
 import AdminService from "../services/admin.service";
 
 class EditInventory extends Component {
-    state = {
-        item: this.props.selectedItem,
-        editInventoryPage: this.props.editInventoryPage,
-        errors: {}
+    constructor() {
+        super();
+        this.state = {
+            item: this.props.selectedItem,
+            editInventoryPage: this.props.editInventoryPage,
+            errors: {}
+        };
     }
     handleChange(propertyName, event) {
         if(event.target.type === 'number') {

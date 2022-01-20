@@ -6,10 +6,18 @@ import LogoImage from '../../images/Logo.png';
 import Popup from "../components/Popup";
 
 class Header extends Component {
-    state = {
-        popupConfig: {},
-        isPopupOpen: false,
-        user: JSON.parse(localStorage.getItem('user'))   
+    constructor() {
+        super();
+        this.state = {
+            popupConfig: {},
+            isPopupOpen: false,
+            user: '' 
+        }
+    }
+    componentDidMount() {
+        this.setState({
+            user: JSON.parse(localStorage.getItem('user')) 
+        });
     }
     handleClose = (list) => {
         this.setState({

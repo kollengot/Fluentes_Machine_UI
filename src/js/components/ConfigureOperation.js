@@ -32,6 +32,9 @@ class ConfigureOperation extends Component {
             workerPageNo: 0
         }
         // this.getData();
+        
+    }
+    componentDidMount() {
         this.getAllTools();
     }
 

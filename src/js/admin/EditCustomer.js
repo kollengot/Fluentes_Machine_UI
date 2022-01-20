@@ -3,10 +3,13 @@ import AdminService from "../services/admin.service";
 import AuthService from "../services/auth.service";
 
 class EditCustomer extends Component {
-    state = {
-        item: this.props.selectedItem,
-        editCustomerPage: this.props.editCustomerPage,
-        errors: {}
+    constructor() {
+        super();
+        this.state = {
+            item: this.props.selectedItem,
+            editCustomerPage: this.props.editCustomerPage,
+            errors: {}
+        };
     }
     handleChange(propertyName, event) {
         var item = this.state.item;
@@ -160,18 +163,9 @@ class EditCustomer extends Component {
                                     onChange={this.handleChange.bind(this, 'email')} />
                                 <div className="text-danger">{this.state.errors.email}</div>
                             </div>
-                            
-                            
                         </div>
-                       
-
                     </div>
-
-
-
                 </div>
-
-
             </React.Fragment>
         );
     }

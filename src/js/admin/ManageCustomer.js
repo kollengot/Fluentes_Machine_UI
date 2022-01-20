@@ -7,15 +7,18 @@ import AdminService from "../services/admin.service";
 
 
 class ManageCustomer extends Component {
-    state = {
-        searchValue: "",
-        listitems: [],
-        selectedItem: [],
-        editCustomerPage: false,
-        popupConfig: {},
-        isPopupOpen: false,
-        hasMoreItems: true,
-        pageNo: 0
+    constructor() {
+        super();
+        this.state = {
+            searchValue: "",
+            listitems: [],
+            selectedItem: [],
+            editCustomerPage: false,
+            popupConfig: {},
+            isPopupOpen: false,
+            hasMoreItems: true,
+            pageNo: 0
+        };
     }
    
     

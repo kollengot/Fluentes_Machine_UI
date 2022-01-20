@@ -4,7 +4,6 @@ import S3 from "react-aws-s3";
 function Upload() {
     const fileInput = useRef();
     const handleClick = (event) => {
-        debugger;
         event.preventDefault();
         let file = fileInput.current.files[0];
         let newFileName = fileInput.current.files[0].name.replace(/\..+$/, "");

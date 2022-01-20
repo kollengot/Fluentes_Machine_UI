@@ -5,8 +5,6 @@ class ToolsList extends Component {
     constructor() {
         super();
         this.state = {
-            //OPTIONS : ["One", "Two", "Three"],
-            //availableToolList 
             OPTIONS: [
                 {
                     "id": "tool10",
@@ -27,12 +25,13 @@ class ToolsList extends Component {
             checkboxes: [],
             searchValue: ""
         };
+        
+    }
+    componentDidMount() {
         this.setCheckbox();
     }
-
     setCheckbox() {
         
-
         var tmpCheckboxes = this.state.OPTIONS.reduce(
             (options, option) => ({
                 ...options,

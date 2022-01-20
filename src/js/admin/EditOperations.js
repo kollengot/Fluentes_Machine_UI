@@ -12,34 +12,36 @@ class EditOperations extends Component {
             hasMoreItems: true,
             pageNo: 0
         }
-        if(this.props.selectedId) this.getOperationById();
-       this.getAllTools();
+    }
+    componentDidMount() {
+        if (this.props.selectedId) this.getOperationById();
+        this.getAllTools();
         //this.getAllWorkers();
     }
     getOperationById() {
-        
-            AdminService.getOperationById(this.props.selectedId).then(
-                response => {
-                    this.setState({
-                        item: response.data
-                    });
-                },
-                error => {
-                    console.log("Error");
-                }
-            );
-         
+
+        AdminService.getOperationById(this.props.selectedId).then(
+            response => {
+                this.setState({
+                    item: response.data
+                });
+            },
+            error => {
+                console.log("Error");
+            }
+        );
+
     }
     getAllTools() {
         AdminService.getAllInventory(this.state.pageNo).then(
             response => {
-                if(response){
+                if (response) {
                     var tmpListitems = [...this.state.toolsList, ...response.data.rows];
                     this.setState({
                         toolsList: tmpListitems,
-                        pageNo: this.state.pageNo+1
+                        pageNo: this.state.pageNo + 1
                     });
-                    if(this.state.pageNo >= response.data.currentPage) {
+                    if (this.state.pageNo >= response.data.currentPage) {
                         this.setState({
                             hasMoreItems: false
                         });
@@ -66,7 +68,7 @@ class EditOperations extends Component {
     } */
 
     handleChange(propertyName, event) {
-        if(event.target.type === 'number') {
+        if (event.target.type === 'number') {
             event.target.value = Math.abs(event.target.value);
         }
         var item = this.state.item;
@@ -217,7 +219,7 @@ class EditOperations extends Component {
                         </select>
                     </div>
                     <div className="col-6">
-                        <input type="number" min = "1" className="form-control col-6 d-inline" onChange={this.handleChange.bind(this, 'toolRequired')} />
+                        <input type="number" min="1" className="form-control col-6 d-inline" onChange={this.handleChange.bind(this, 'toolRequired')} />
                         <button type="button" className="btn btn-green btn-sm ml-2 pr-4 pl-4 d-inline" onClick={this.addTools.bind(this)}>Add</button>
                     </div>
                 </div>

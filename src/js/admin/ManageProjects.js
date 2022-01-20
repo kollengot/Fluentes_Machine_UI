@@ -7,16 +7,19 @@ import EditProject from './EditProject';
 import AdminService from "../services/admin.service";
 
 class ManageProjects extends Component {
-    state = {
-        searchValue: "",
-        listitems: [],
-        selectedItem: [],
-        editProjectPage: false,
-        popupConfig: {},
-        isPopupOpen: false
-    }
+    
     constructor(props) {
         super(props);
+        this.state = {
+            searchValue: "",
+            listitems: [],
+            selectedItem: [],
+            editProjectPage: false,
+            popupConfig: {},
+            isPopupOpen: false
+        };
+    }
+    componentDidMount() {
         this.getAllProjectList();
     }
     getAllProjectList() {

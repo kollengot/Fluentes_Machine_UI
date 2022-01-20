@@ -8,9 +8,10 @@ class OperationList extends Component {
             listitems: [],
             searchValue: ""
         }
+    }
+    componentDidMount() {
         this.getAllOperationList();
     }
-
     getAllOperationList() {
         AdminService.getAllOperations().then(
             response => {

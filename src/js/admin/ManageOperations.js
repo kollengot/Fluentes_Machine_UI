@@ -5,16 +5,20 @@ import EditOperations from './EditOperations';
 import AdminService from "../services/admin.service";
 
 class ManageOperations extends Component {
-    state = {
-        searchValue: "",
-        listitems: [],
-        selectedItem: [],
-        editOperationPage: false,
-        popupConfig: {},
-        isPopupOpen: false
-    }
+    
     constructor(props) {
         super(props);
+        this.state = {
+            searchValue: "",
+            listitems: [],
+            selectedItem: [],
+            editOperationPage: false,
+            popupConfig: {},
+            isPopupOpen: false
+        };
+        
+    }
+    componentDidMount() {
         this.getAllOperationList();
     }
     getAllOperationList() {

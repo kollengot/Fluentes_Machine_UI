@@ -6,14 +6,17 @@ import {usersTag}  from "../common/Constants";
 
 
 class Profile extends Component {
-    state = {
-        item:{},
-        userId: JSON.parse(localStorage.getItem('user')).userId,
-        respMsg: ''
-    }
+    
     constructor(props) {
         super(props);
-        this.getUserData();
+        this.state = {
+            item:{},
+            userId: JSON.parse(localStorage.getItem('user')).userId,
+            respMsg: ''
+        }
+    }
+    componentDidMount() {
+         this.getUserData();
     }
     getUserData() {
         if(this.state.userId === usersTag.USER_TAG) {

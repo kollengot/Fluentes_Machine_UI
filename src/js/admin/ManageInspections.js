@@ -4,15 +4,18 @@ import { validationMessages } from '../common/Constants';
 import AdminService from "../services/admin.service";
 
 class ManageInspection extends Component {
-    state = {
-        selectedItem: [],
-        editInspectionPage: false,
-        popupConfig: {},
-        isPopupOpen: false,
-        errors: {}
-    }
+    
     constructor(props) {
         super(props);
+        this.state = {
+            selectedItem: [],
+            editInspectionPage: false,
+            popupConfig: {},
+            isPopupOpen: false,
+            errors: {}
+        };
+    }
+    componentDidMount() {
         this.getAllInspectionList();
     }
     getAllInspectionList() {
@@ -94,12 +97,6 @@ class ManageInspection extends Component {
         });
     }
     
-    handleFormChange(propertyName, event) {
-       
-    }
-    saveTaxUpdate() {
-
-    }
     handleBreadCrumb() {
         this.setState({
             editInspectionPage: false
@@ -249,47 +246,19 @@ class ManageInspection extends Component {
 
     </div>);
     }
-    renderTax() {
-        return(
-            <div className="col admin-list-page">
-                <div className="list-group-header section-header row">
-                <div className="col-3">
-                    <span className="mb-1 underline">Manage</span>
-                    <span className="mb-1 blue-color pl-2">Tax</span> 
-                </div>
-            </div>
-            <div className="col-6 blue-box-div tax-div d-inline-block">
-                            <label className="pr-2">Tax</label>
-                            <input type="number" className="form-control d-inline-block"
-                                        
-                                        onChange={this.handleFormChange.bind(this, 'tax')}
-                                    />
-                            <label className="pl-2">%</label>
-
-
-              <button type="button" className="btn btn-info btn-sm float-right mr-4" onClick={() => this.saveTaxUpdate()}>Update</button>
-
-            </div>
-            </div>
-        );
-    }
+    
     renderInspectionList() {
         return (<div className="col admin-list-page">
             <div className="list-group-header section-header row">
                 <div className="col-6">
                     <span className="mb-1 underline">Manage</span>
                     <span className="mb-1 blue-color pl-2">Inspection</span>
-
-                    
                 </div>
                 <div className="col-6 text-right inspection-btngrp pt-2">
                     <button className="btn delete-btn" onClick={() => this.deleteInspection()}></button>
                     <button className="btn edit-btn" onClick={() => this.editInspection()}></button>
                     <button className="btn add-btn" onClick={() => this.addInspection()}></button>
-                    
                 </div>
-
-
             </div>
             <div className="quote-req-list ">
                 <div className="row mt-1 quote-req-header">
@@ -333,7 +302,6 @@ class ManageInspection extends Component {
             <React.Fragment>
                 {!this.state.editInspectionPage && this.renderInspectionList()}
                 {this.state.editInspectionPage && this.renderEditInspection()}
-                {/*this.renderTax()*/}
                 <Popup popupConfig = {this.state.popupConfig} openFlag = {this.state.isPopupOpen} parentCloseCallback={this.handleClose.bind(this)} parentConfirmCallback = {this.handleModalYes.bind(this)}></Popup>
             </React.Fragment>
         );

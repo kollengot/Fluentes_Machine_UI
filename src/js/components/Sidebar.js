@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 class Sidebar extends Component {
 
-    
     constructor(props) {
         super(props); 
         this.state = {
             activeLink: 1,
             leftMenu: []
         } 
+    }
+    componentDidMount() {
         this.selectMenu();
     }
     selectMenu() {
@@ -71,21 +72,16 @@ class Sidebar extends Component {
                 }
             ];
         }
-        this.state.leftMenu = menu
-        
+        this.setState({ leftMenu: menu });
     }
     selectMenuItem(id) {
         this.setState({ activeLink: id });
         this.props.onClick(id);
     }
-
-
     render() {
-        
         const { leftMenu, activeLink } = this.state;
         return (
             <React.Fragment>
-
                     <div className="sidebar-div">
                         <ul className="nav flex-column">
                             {leftMenu && leftMenu.map(item => {
@@ -102,8 +98,6 @@ class Sidebar extends Component {
                             })}
                         </ul>
                     </div>
-                    
-                
             </React.Fragment>
         );
     }

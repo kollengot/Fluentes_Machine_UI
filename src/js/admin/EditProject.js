@@ -8,18 +8,21 @@ import Popup from "../components/Popup";
 class EditProject extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            item: {},
+            workerList: [],
+            selectedWorker: {},
+            popupConfig: {},
+            isPopupOpen: false,
+            errors: {},
+            hasMoreItems: true,
+            pageNo: 0
+        };
+       
+    }
+    componentDidMount() {
         this.getAllWorkers();
         this.getSingleProject();
-    }
-    state = {
-        item: {},
-        workerList: [],
-        selectedWorker: {},
-        popupConfig: {},
-        isPopupOpen: false,
-        errors: {},
-        hasMoreItems: true,
-        pageNo: 0
     }
     getSingleProject = () => {
         AdminService.getSingleProject(this.props.selectedId).then(

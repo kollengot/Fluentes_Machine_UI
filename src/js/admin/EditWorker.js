@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 import AdminService from "../services/admin.service";
 
 class EditWorker extends Component {
-    state = {
-        item: this.props.selectedItem,
-        editWorkerPage: this.props.editWorkerPage,
-        errors: {}
+    constructor() {
+        super();
+        this.state = {
+            item: this.props.selectedItem,
+            editWorkerPage: this.props.editWorkerPage,
+            errors: {}
+        };
     }
     handleChange(propertyName, event) {
         if(event.target.type === 'number') {

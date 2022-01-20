@@ -6,15 +6,18 @@ import EditWorker from './EditWorker';
 import AdminService from "../services/admin.service";
 
 class ManageWorker extends Component {
-    state = {
-        searchValue: "",
-        listitems: [],
-        selectedItem: [],
-        editWorkerPage: false,
-        popupConfig: {},
-        isPopupOpen: false,
-        hasMoreItems: true,
-        pageNo: 0
+    constructor() {
+        super();
+        this.state = {
+            searchValue: "",
+            listitems: [],
+            selectedItem: [],
+            editWorkerPage: false,
+            popupConfig: {},
+            isPopupOpen: false,
+            hasMoreItems: true,
+            pageNo: 0
+        };
     }
     getAllWorkerList() {
         AdminService.getAllWorkers(this.state.pageNo).then(
